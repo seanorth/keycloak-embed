@@ -27,11 +27,9 @@
 4.  新建 Pull Request
 
 
-#### 特技
+#### 参考
 
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+- [Understanding token usage in Keycloak](https://www.janua.fr/understanding-token-usage-in-keycloak/#:~:text=Offline%20tokens%20can%20have%20very%20long%20living%20period,the%20offline%20token%20for%20a%20refresh%20token%20action.)
+- [Customizing Themes for Keycloak](https://www.baeldung.com/spring-keycloak-custom-themes)
+- [Customizing the Login Page for Keycloak](https://www.baeldung.com/keycloak-custom-login-page)
+- - [Custom User Attributes with Keycloak](https://www.baeldung.com/keycloak-custom-user-attributes)

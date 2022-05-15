@@ -1,0 +1,47 @@
+server:
+  port: 9000  
+
+spring:
+  application:
+    name: springseed-keycloak-embed
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/keycloak-embed?characterEncoding=UTF-8&useSSL=true
+    username: root
+    password: root
+  jpa:
+    open-in-view: false
+  redis:
+    host: 127.0.0.1
+    port: 6379        
+
+# 日志配置
+logging:
+  level:
+    ROOT: INFO
+    "[org.springseed]": DEBUG
+    # "[org.springframework.security]": DEBUG
+    # "[org.springframework.cache]": TRACE
+    # "[org.keycloak]": TRACE
+
+springseed.keycloak:
+  # custom:
+  #   adminUser:
+  #     username: admin
+  #     password: admin
+  #     create-admin-user-enabled: true
+
+  #   migration:
+  #     import-enabled: true
+  #     import-location: classpath:springseeds-realm.json
+
+  connectionsJpa:
+    default:
+     showSql: false
+
+  # emailSender:
+  #   provider: "mail-logger"
+  #   aString: "foo"
+
+
+
+
