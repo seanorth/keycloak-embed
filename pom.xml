@@ -19,6 +19,8 @@
     <modules>
         <module>springboot-embedded-server</module>
         <module>otp-sms-provider</module>
+        <module>otp-mail-provider</module>
+        <module>theme-provider</module>
     </modules>
 
     <dependencyManagement>

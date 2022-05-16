@@ -12,8 +12,8 @@ import org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfigurati
  * @since 1.0.0
  */
 @SpringBootApplication(exclude = {LiquibaseAutoConfiguration.class, FreeMarkerAutoConfiguration.class})
-public class KeycloakEmbedApplication {
+public class EmbeddedKeycloakApplication {
     public static void main(String[] args) throws Exception {
-		SpringApplication.run(KeycloakEmbedApplication.class, args);
+		SpringApplication.run(EmbeddedKeycloakApplication.class, args);
 	}
 }

@@ -1,4 +1,4 @@
-package cn.springseed.keycloak.springboot.component;
+package cn.springseed.keycloak.springboot.factory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,36 +7,41 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import org.keycloak.Config;
+import org.keycloak.authentication.Authenticator;
+import org.keycloak.authentication.AuthenticatorFactory;
 import org.keycloak.authentication.AuthenticatorSpi;
 import org.keycloak.authentication.authenticators.browser.DeployedScriptAuthenticatorFactory;
 import org.keycloak.authorization.policy.provider.PolicySpi;
 import org.keycloak.authorization.policy.provider.js.DeployedScriptPolicyFactory;
 import org.keycloak.common.Profile;
+import org.keycloak.models.AuthenticationExecutionModel;
+import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
 import org.keycloak.protocol.ProtocolMapperSpi;
 import org.keycloak.protocol.oidc.mappers.DeployedScriptOIDCProtocolMapper;
+import org.keycloak.provider.EnvironmentDependentProviderFactory;
 import org.keycloak.provider.KeycloakDeploymentInfo;
+import org.keycloak.provider.ProviderConfigProperty;
 import org.keycloak.provider.ProviderManager;
 import org.keycloak.provider.ProviderManagerDeployer;
 import org.keycloak.provider.ProviderManagerRegistry;
 import org.keycloak.representations.provider.ScriptProviderDescriptor;
 import org.keycloak.representations.provider.ScriptProviderMetadata;
 import org.keycloak.util.JsonSerialization;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.util.StreamUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * JS组件注册
+ * JS认证组件注册
  * 
  * @author PinWei Wan
  * @since 1.0.0
  */
 @Slf4j
-public class ScriptComponentsRegistrar extends AbstractComponentsRegistrar {
+public class ScriptAuthenticatorFactory  implements AuthenticatorFactory, EnvironmentDependentProviderFactory {
 
     public static final String KEYCLOAK_SCRIPTS_JSON_LOCATION = "META-INF/keycloak-scripts.json";
 
@@ -46,13 +51,18 @@ public class ScriptComponentsRegistrar extends AbstractComponentsRegistrar {
     }
 
     @Override
-    public String getDisplayType() {
-        return getId().toUpperCase();
+    public Authenticator create(KeycloakSession session) {
+        // NOT USED
+        return null;
+    }
+
+    @Override
+    public void init(Config.Scope config) {
+        // NOOP
     }
 
     @Override
     public void postInit(KeycloakSessionFactory factory) {
-
         KeycloakScripts keycloakScripts = discoverScriptComponents();
         if (keycloakScripts == null) {
             return;
@@ -62,31 +72,28 @@ public class ScriptComponentsRegistrar extends AbstractComponentsRegistrar {
     }
 
     private KeycloakScripts discoverScriptComponents() {
-        final Resource scriptResource = new ClassPathResource(KEYCLOAK_SCRIPTS_JSON_LOCATION);
 
-        if (!scriptResource.exists()) {
-            if (log.isDebugEnabled()) {
-                log.debug("Could detect any script-based components.");
+        try (InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(KEYCLOAK_SCRIPTS_JSON_LOCATION)) {
+
+            if (in == null) {
+                log.info("Could detect any script-based components.");
+                return null;
             }
-            return null;
-        }
-        try (InputStream in = scriptResource.getInputStream()) {
-            KeycloakScripts keycloakScripts = new KeycloakScripts(
-                    JsonSerialization.readValue(in, ScriptProviderDescriptor.class));
+
+            KeycloakScripts keycloakScripts = new KeycloakScripts(JsonSerialization.readValue(in, ScriptProviderDescriptor.class));
             List<ScriptProviderMetadata> authenticators = keycloakScripts.getAuthenticators();
             List<ScriptProviderMetadata> oidcMappers = keycloakScripts.getOidcMappers();
             List<ScriptProviderMetadata> policies = keycloakScripts.getPolicies();
-            log.info("Detected script-based components. authenticators={} mappers={} policies={}",
-                    authenticators.size(), oidcMappers.size(), policies.size());
+            log.info("Detected script-based components. authenticators={} mappers={} policies={}", authenticators.size(), oidcMappers.size(), policies.size());
 
             return keycloakScripts;
         } catch (IOException e) {
-            log.info("Failed to load detect any script-based components on classpath from {}.",
-                    KEYCLOAK_SCRIPTS_JSON_LOCATION, e);
+            log.info("Failed to load detect any script-based components on classpath from {}.", KEYCLOAK_SCRIPTS_JSON_LOCATION, e);
         }
 
         return null;
     }
+
 
     private void deployKeycloakScriptComponents(ProviderManagerDeployer factory, KeycloakScripts keycloakScripts) {
 
@@ -124,15 +131,8 @@ public class ScriptComponentsRegistrar extends AbstractComponentsRegistrar {
         }
         scriptMetadata.setName(name);
 
-        final String scriptLocation = "scripts/" + scriptMetadata.getFileName();
-        final Resource scriptResource = new ClassPathResource(scriptLocation);
-        if (!scriptResource.exists()) {
-            log.warn("Cannot find file from {}", scriptLocation);
-            return null;
-        }
-
-        log.warn("load script from {}", scriptLocation);
-        try (InputStream in = scriptResource.getInputStream()) {
+        String scriptLocation = "./scripts/" + scriptMetadata.getFileName();
+        try (InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(scriptLocation)) {
             scriptMetadata.setCode(StreamUtils.copyToString(in, StandardCharsets.UTF_8));
         } catch (IOException ex) {
             log.warn("Cannot load script from {}", scriptMetadata.getFileName());
@@ -142,8 +142,48 @@ public class ScriptComponentsRegistrar extends AbstractComponentsRegistrar {
     }
 
     @Override
+    public void close() {
+        // NOOP
+    }
+
+    @Override
     public boolean isSupported() {
         return Profile.isFeatureEnabled(Profile.Feature.SCRIPTS);
+    }
+
+    @Override
+    public String getDisplayType() {
+        return null;
+    }
+
+    @Override
+    public String getReferenceCategory() {
+        return null;
+    }
+
+    @Override
+    public boolean isConfigurable() {
+        return false;
+    }
+
+    @Override
+    public AuthenticationExecutionModel.Requirement[] getRequirementChoices() {
+        return new AuthenticationExecutionModel.Requirement[0];
+    }
+
+    @Override
+    public boolean isUserSetupAllowed() {
+        return false;
+    }
+
+    @Override
+    public String getHelpText() {
+        return null;
+    }
+
+    @Override
+    public List<ProviderConfigProperty> getConfigProperties() {
+        return Collections.emptyList();
     }
 
     @RequiredArgsConstructor
@@ -152,18 +192,15 @@ public class ScriptComponentsRegistrar extends AbstractComponentsRegistrar {
         private final ScriptProviderDescriptor descriptor;
 
         public List<ScriptProviderMetadata> getAuthenticators() {
-            return Optional.ofNullable(descriptor.getProviders().get(ScriptProviderDescriptor.AUTHENTICATORS))
-                    .orElse(Collections.emptyList());
+            return Optional.ofNullable(descriptor.getProviders().get(ScriptProviderDescriptor.AUTHENTICATORS)).orElse(Collections.emptyList());
         }
 
         public List<ScriptProviderMetadata> getOidcMappers() {
-            return Optional.ofNullable(descriptor.getProviders().get(ScriptProviderDescriptor.MAPPERS))
-                    .orElse(Collections.emptyList());
+            return Optional.ofNullable(descriptor.getProviders().get(ScriptProviderDescriptor.MAPPERS)).orElse(Collections.emptyList());
         }
 
         public List<ScriptProviderMetadata> getPolicies() {
-            return Optional.ofNullable(descriptor.getProviders().get(ScriptProviderDescriptor.POLICIES))
-                    .orElse(Collections.emptyList());
+            return Optional.ofNullable(descriptor.getProviders().get(ScriptProviderDescriptor.POLICIES)).orElse(Collections.emptyList());
         }
     }
 

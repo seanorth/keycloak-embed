@@ -6,10 +6,10 @@
     "configurations": [
         {
             "type": "java",
-            "name": "KeycloakEmbedApplication",
+            "name": "EmbeddedKeycloakApplication",
             "request": "launch",
             "console": "internalConsole",            
-            "mainClass": "cn.springseed.keycloak.springboot.KeycloakEmbedApplication",
+            "mainClass": "cn.springseed.keycloak.springboot.EmbeddedKeycloakApplication",
             "projectName": "springboot-embedded-server"
         }
     ]
