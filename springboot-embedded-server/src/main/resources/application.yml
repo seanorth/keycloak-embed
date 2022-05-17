@@ -48,6 +48,7 @@ springseed.keycloak:
   #   automaticReconnect: false
   #   cleanSession: false
   #   connectionTimeout: 5
+  #   keepAliveInterval: 6
 
 
 

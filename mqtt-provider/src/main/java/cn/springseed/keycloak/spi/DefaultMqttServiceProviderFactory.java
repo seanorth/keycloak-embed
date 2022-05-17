@@ -20,7 +20,7 @@ public class DefaultMqttServiceProviderFactory implements MqttServiceProviderFac
 
     @Override
     public void init(Scope config) {
-        cfg = MqttConfig.createFromScope(config);
+        cfg = MqttConfig.create().from(config);
     }
 
     @Override

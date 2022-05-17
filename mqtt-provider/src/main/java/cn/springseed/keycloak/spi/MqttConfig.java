@@ -4,20 +4,19 @@ import java.util.Locale;
 
 import org.keycloak.Config.Scope;
 
-import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
  * 配置属性
  * 
+ * <br>
+ * 参考：https://www.emqx.com/zh/blog/how-to-use-mqtt-packet-to-implement-publishing-and-subscribing-functions
+ * 
  * @author PinWei Wan
  * @since 1.0.0
  */
 @Getter
-@Setter
-@Builder
 @Slf4j
 public class MqttConfig {
     /** 模拟标志，如果true，则将消息打印到控制台 */
@@ -37,27 +36,34 @@ public class MqttConfig {
     private boolean cleanSession;
     /** 连接超时，单位秒 */
     private int connectionTimeout;
+    /** 保持连接, 单位秒 */
+    private int keepAliveInterval;
 
-    public static MqttConfig createFromScope(Scope config) {
-        final boolean simulation = Boolean.valueOf(resolveConfigVar(config, "simulation", "true"));
-        if (simulation) {
-            return MqttConfig.builder().simulation(simulation).build();
-        }
-
-
-        return MqttConfig.builder()
-                .simulation(simulation)
-                .serverUri(resolveConfigVar(config, "serverUri", "tcp://localhost:1883"))
-                .username(resolveConfigVar(config, "password", ""))
-                .password(resolveConfigVar(config, "password", ""))
-                .automaticReconnect(Boolean.valueOf(resolveConfigVar(config, "automaticReconnect", "true")))
-                .cleanSession(Boolean.valueOf(resolveConfigVar(config, "cleanSession", "true")))
-                .connectionTimeout((Integer.valueOf(resolveConfigVar(config, "connectionTimeout", "10"))))
-                .clientId(resolveConfigVar(config, "clientId", "keycloak"))
-                .build();
+    private MqttConfig() {
     }
 
-    private static String resolveConfigVar(Scope config, String variableName, String defaultValue) {
+    public static MqttConfig create() {
+        return new MqttConfig();
+    }
+
+    public MqttConfig from(Scope config) {
+        this.simulation = Boolean.valueOf(resolveConfigVar(config, "simulation", "true"));
+        if (this.simulation) {
+            return this;
+        }
+
+        this.serverUri = resolveConfigVar(config, "serverUri", "tcp://localhost:1883");
+        this.username = resolveConfigVar(config, "password", "");
+        this.password = resolveConfigVar(config, "password", "");
+        this.automaticReconnect = Boolean.valueOf(resolveConfigVar(config, "automaticReconnect", "true"));
+        this.cleanSession = Boolean.valueOf(resolveConfigVar(config, "cleanSession", "true"));
+        this.connectionTimeout = Integer.valueOf(resolveConfigVar(config, "connectionTimeout", "10"));
+        this.keepAliveInterval = Integer.valueOf(resolveConfigVar(config, "keepAliveInterval", "60"));
+        this.clientId = resolveConfigVar(config, "clientId", "keycloak");
+        return this;
+    }
+
+    private String resolveConfigVar(Scope config, String variableName, String defaultValue) {
 
         String value = defaultValue;
         if (config != null && config.get(variableName) != null) {

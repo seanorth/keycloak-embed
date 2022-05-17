@@ -43,6 +43,7 @@ public class DefaultMqttService implements MqttService {
             options.setAutomaticReconnect(config.isAutomaticReconnect());
             options.setCleanSession(config.isCleanSession());
             options.setConnectionTimeout(config.getConnectionTimeout());
+            options.setKeepAliveInterval(config.getKeepAliveInterval());
 
             final String username = config.getUsername();
             final String password = config.getPassword();
