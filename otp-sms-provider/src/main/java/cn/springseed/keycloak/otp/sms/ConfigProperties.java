@@ -1,4 +1,4 @@
-package cn.springseed.keycloak.otp;
+package cn.springseed.keycloak.otp.sms;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,8 +14,7 @@ import org.keycloak.models.AuthenticatorConfigModel;
 public class ConfigProperties {
     public final static String PRO_LENGTH = "length";
     public final static String PRO_TTL = "ttl";
-    public final static String PRO_SENDER_ID = "senderId";
-    public final static String PRO_SIMULATION = "simulation";
+    public final static String PRO_TOPIC = "topic";
 
     private Map<String, String> cache = new HashMap<>();
 
@@ -35,11 +34,7 @@ public class ConfigProperties {
         return Integer.parseInt(cache.get(PRO_TTL));
     }
 
-    public String getSenderId() {
-        return cache.get(PRO_SENDER_ID);
-    }
-
-    public boolean isSimulation() {
-        return Boolean.parseBoolean(cache.getOrDefault(PRO_SIMULATION, "false"));
+    public String getTopic() {
+        return cache.get(PRO_TOPIC);
     }
 }

@@ -21,6 +21,7 @@
         <module>otp-sms-provider</module>
         <module>otp-mail-provider</module>
         <module>theme-provider</module>
+        <module>mqtt-provider</module>
     </modules>
 
     <dependencyManagement>

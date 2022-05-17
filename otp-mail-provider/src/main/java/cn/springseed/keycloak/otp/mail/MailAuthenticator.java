@@ -1,4 +1,4 @@
-package cn.springseed.keycloak.otp;
+package cn.springseed.keycloak.otp.mail;
 
 import java.util.Locale;
 
@@ -14,32 +14,34 @@ import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserModel;
 import org.keycloak.sessions.AuthenticationSessionModel;
-import org.keycloak.theme.Theme;
+
+import cn.springseed.keycloak.spi.MqttService;
 
 /**
  * 邮件认证器
- *  
+ * 
  * @author PinWei Wan
  * @since 1.0.0
  */
 public class MailAuthenticator implements Authenticator {
-    private static final String TPL_CODE = "s8d-otp-mail.ftl";
-    private static final String EMAIL_ATTR = "email";
+	private static final String MAIL_TEMPLATE_CODE = "KK.OTP-MAIL";
+	private static final String TPL_CODE = "s8d-otp-mail.ftl";
+	private static final String EMAIL_ATTR = "email";
 
-    @Override
-    public void close() {
-        
-    }
+	@Override
+	public void close() {
 
-    @Override
-    public void authenticate(AuthenticationFlowContext context) {
+	}
+
+	@Override
+	public void authenticate(AuthenticationFlowContext context) {
 		AuthenticatorConfigModel config = context.getAuthenticatorConfig();
 		KeycloakSession session = context.getSession();
 		UserModel user = context.getUser();
 		ConfigProperties properties = ConfigProperties.of(config);
 
 		String mail = user.getFirstAttribute(EMAIL_ATTR);
-	
+
 		int length = properties.getLength();
 		int ttl = properties.getTtl();
 
@@ -49,25 +51,30 @@ public class MailAuthenticator implements Authenticator {
 		authSession.setAuthNote("ttl", Long.toString(System.currentTimeMillis() + (ttl * 1000L)));
 
 		try {
-			Theme theme = session.theme().getTheme(Theme.Type.LOGIN);
 			Locale locale = session.getContext().resolveLocale(user);
-			String mailAuthText = theme.getMessages(locale).getProperty("mailAuthText");
-			String mailText = String.format(mailAuthText, code, Math.floorDiv(ttl, 60));
+			// Theme theme = session.theme().getTheme(Theme.Type.LOGIN);
+			// String mailAuthText = theme.getMessages(locale).getProperty("mailAuthText");
+			// String mailText = String.format(mailAuthText, code, Math.floorDiv(ttl, 60));
 
-			MailSenderServiceFactory.get(properties).send(mail, mailText);
+			final Message message = Message.custom()
+					.code(code)
+					.ttl(Math.floorDiv(ttl, 60))
+					.mailTo(mail)
+					.templateCode(MAIL_TEMPLATE_CODE).locale(locale);
+			session.getProvider(MqttService.class).publish(properties.getTopic(), message.toJson());
 
 			context.challenge(context.form().setAttribute("realm", context.getRealm()).createForm(TPL_CODE));
 		} catch (Exception e) {
 			context.failureChallenge(AuthenticationFlowError.INTERNAL_ERROR,
-				context.form().setError("mailAuthCodeNotSent", e.getMessage())
-					.createErrorPage(Response.Status.INTERNAL_SERVER_ERROR));
+					context.form().setError("mailAuthCodeNotSent", e.getMessage())
+							.createErrorPage(Response.Status.INTERNAL_SERVER_ERROR));
 		}
-        
-    }
 
-    @Override
-    public void action(AuthenticationFlowContext context) {
-        String enteredCode = context.getHttpRequest().getDecodedFormParameters().getFirst("code");
+	}
+
+	@Override
+	public void action(AuthenticationFlowContext context) {
+		String enteredCode = context.getHttpRequest().getDecodedFormParameters().getFirst("code");
 
 		AuthenticationSessionModel authSession = context.getAuthenticationSession();
 		String code = authSession.getAuthNote("code");
@@ -75,17 +82,17 @@ public class MailAuthenticator implements Authenticator {
 
 		if (code == null || ttl == null) {
 			context.failureChallenge(AuthenticationFlowError.INTERNAL_ERROR,
-				context.form().createErrorPage(Response.Status.INTERNAL_SERVER_ERROR));
+					context.form().createErrorPage(Response.Status.INTERNAL_SERVER_ERROR));
 			return;
 		}
 
-        // 验证码有效期判断
+		// 验证码有效期判断
 		boolean isValid = enteredCode.equals(code);
 		if (isValid) {
 			if (Long.parseLong(ttl) < System.currentTimeMillis()) {
 				// 已过期(expired)
 				context.failureChallenge(AuthenticationFlowError.EXPIRED_CODE,
-					context.form().setError("mailAuthCodeExpired").createErrorPage(Response.Status.BAD_REQUEST));
+						context.form().setError("mailAuthCodeExpired").createErrorPage(Response.Status.BAD_REQUEST));
 			} else {
 				// 有效的(valid)
 				context.success();
@@ -95,27 +102,27 @@ public class MailAuthenticator implements Authenticator {
 			AuthenticationExecutionModel execution = context.getExecution();
 			if (execution.isRequired()) {
 				context.failureChallenge(AuthenticationFlowError.INVALID_CREDENTIALS,
-					context.form().setAttribute("realm", context.getRealm())
-						.setError("mailAuthCodeInvalid").createForm(TPL_CODE));
+						context.form().setAttribute("realm", context.getRealm())
+								.setError("mailAuthCodeInvalid").createForm(TPL_CODE));
 			} else if (execution.isConditional() || execution.isAlternative()) {
 				context.attempted();
 			}
 		}
-        
-    }
 
-    @Override
-    public boolean requiresUser() {
-        return true;
-    }
+	}
 
-    @Override
-    public boolean configuredFor(KeycloakSession session, RealmModel realm, UserModel user) {
-        return user.getFirstAttribute(EMAIL_ATTR) != null;
-    }
+	@Override
+	public boolean requiresUser() {
+		return true;
+	}
 
-    @Override
-    public void setRequiredActions(KeycloakSession session, RealmModel realm, UserModel user) {
-        
-    }
+	@Override
+	public boolean configuredFor(KeycloakSession session, RealmModel realm, UserModel user) {
+		return user.getFirstAttribute(EMAIL_ATTR) != null;
+	}
+
+	@Override
+	public void setRequiredActions(KeycloakSession session, RealmModel realm, UserModel user) {
+
+	}
 }

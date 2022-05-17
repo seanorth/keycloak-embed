@@ -1,4 +1,4 @@
-package cn.springseed.keycloak.otp;
+package cn.springseed.keycloak.otp.sms;
 
 import java.util.List;
 
@@ -78,9 +78,7 @@ public class SmsAuthenticatorFactory implements AuthenticatorFactory {
 		return List.of(
 			new ProviderConfigProperty("length", "Code length", "The number of digits of the generated code.", ProviderConfigProperty.STRING_TYPE, 6),
 			new ProviderConfigProperty("ttl", "Time-to-live", "The time to live in seconds for the code to be valid.", ProviderConfigProperty.STRING_TYPE, "300"),
-			new ProviderConfigProperty("senderId", "SenderId", "The sender ID is displayed as the message sender on the receiving device.", ProviderConfigProperty.STRING_TYPE, "Keycloak"),
-			new ProviderConfigProperty("simulation", "Simulation mode", "In simulation mode, the SMS won't be sent, but printed to the server logs", ProviderConfigProperty.BOOLEAN_TYPE, true)
+			new ProviderConfigProperty("topic", "MQTT Topic", "MQTT topics are a form of addressing that allows MQTT clients to share information.", ProviderConfigProperty.STRING_TYPE, "sms.topic")
 		);
     }
-    
 }

@@ -16,8 +16,16 @@
 
     <dependencies>
         <dependency>
+            <groupId>cn.springseed.keycloak</groupId>
+            <artifactId>mqtt-provider</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+            
+        <dependency>
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-server-spi</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -29,11 +37,13 @@
         <dependency>
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-server-spi-private</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-services</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

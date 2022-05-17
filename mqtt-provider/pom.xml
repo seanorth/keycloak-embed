@@ -9,19 +9,16 @@
         <version>17.0.1</version>
     </parent>
 
-    <artifactId>otp-mail-provider</artifactId>
+    <artifactId>mqtt-provider</artifactId>
     <packaging>jar</packaging>
-    <name>SpringSeed : Keycloak : OtpMailProvider</name>
-    <description>基于邮件的动态口令(OTP)</description>
+    <name>SpringSeed : Keycloak : MQTT</name>
+    <description>支持MQTT</description>
+
+    <properties>
+        <mqttv3.version>1.2.5</mqttv3.version>
+    </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>cn.springseed.keycloak</groupId>
-            <artifactId>mqtt-provider</artifactId>
-            <version>${project.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
         <dependency>
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-server-spi</artifactId>
@@ -45,6 +42,12 @@
             <artifactId>keycloak-services</artifactId>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.paho</groupId>
+            <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+            <version>${mqttv3.version}</version>
+        </dependency>        
     </dependencies>
 
     <build>

@@ -38,9 +38,16 @@ springseed.keycloak:
     default:
      showSql: false
 
-  # emailSender:
-  #   provider: "mail-logger"
-  #   aString: "foo"
+  # mqtt:
+  #   provider: "s8d-mqtt-client"
+  #   simulation: true
+  #   serverUri: 1
+  #   username: 2
+  #   password: 3
+  #   clientId: 4
+  #   automaticReconnect: false
+  #   cleanSession: false
+  #   connectionTimeout: 5
 
 
 

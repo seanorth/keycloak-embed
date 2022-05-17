@@ -1,1 +1,1 @@
-cn.springseed.keycloak.otp.MailAuthenticatorFactory
+cn.springseed.keycloak.otp.mail.MailAuthenticatorFactory

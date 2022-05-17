@@ -1,4 +1,4 @@
-package cn.springseed.keycloak.otp;
+package cn.springseed.keycloak.otp.sms;
 
 import java.util.Locale;
 
@@ -14,7 +14,8 @@ import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserModel;
 import org.keycloak.sessions.AuthenticationSessionModel;
-import org.keycloak.theme.Theme;
+
+import cn.springseed.keycloak.spi.MqttService;
 
 /**
  * 短信认证器
@@ -23,6 +24,7 @@ import org.keycloak.theme.Theme;
  * @since 1.0.0
  */
 public class SmsAuthenticator implements Authenticator {
+	private static final String SMS_TEMPLATE_CODE = "KK.OTP-SMS";
     private static final String TPL_CODE = "s8d-otp-sms.ftl";
     private static final String PHONE_NUMBER_ATTR = "phoneNumber";
 
@@ -50,12 +52,17 @@ public class SmsAuthenticator implements Authenticator {
 		authSession.setAuthNote("ttl", Long.toString(System.currentTimeMillis() + (ttl * 1000L)));
 
 		try {
-			Theme theme = session.theme().getTheme(Theme.Type.LOGIN);
 			Locale locale = session.getContext().resolveLocale(user);
-			String smsAuthText = theme.getMessages(locale).getProperty("smsAuthText");
-			String smsText = String.format(smsAuthText, code, Math.floorDiv(ttl, 60));
+			// Theme theme = session.theme().getTheme(Theme.Type.LOGIN);
+			// String smsAuthText = theme.getMessages(locale).getProperty("smsAuthText");
+			// String smsText = String.format(smsAuthText, code, Math.floorDiv(ttl, 60));
 
-			SmsSenderServiceFactory.get(properties).send(mobileNumber, smsText);
+			final Message message = Message.custom()
+					.code(code)
+					.ttl(Math.floorDiv(ttl, 60))
+					.phoneNumber(mobileNumber)
+					.templateCode(SMS_TEMPLATE_CODE).locale(locale);
+			session.getProvider(MqttService.class).publish(properties.getTopic(), message.toJson());
 
 			context.challenge(context.form().setAttribute("realm", context.getRealm()).createForm(TPL_CODE));
 		} catch (Exception e) {

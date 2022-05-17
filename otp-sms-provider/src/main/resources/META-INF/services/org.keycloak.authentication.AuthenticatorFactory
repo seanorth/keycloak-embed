@@ -1,1 +1,1 @@
-cn.springseed.keycloak.otp.SmsAuthenticatorFactory
+cn.springseed.keycloak.otp.sms.SmsAuthenticatorFactory
