@@ -22,6 +22,7 @@
         <module>otp-mail-provider</module>
         <module>theme-provider</module>
         <module>mqtt-publisher-provider</module>
+        <module>mail-sender-mqtt-provider</module>
     </modules>
 
     <dependencyManagement>

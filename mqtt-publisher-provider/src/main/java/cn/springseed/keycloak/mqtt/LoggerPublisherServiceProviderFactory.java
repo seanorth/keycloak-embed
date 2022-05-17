@@ -1,5 +1,7 @@
 package cn.springseed.keycloak.mqtt;
 
+import java.util.Map;
+
 import org.keycloak.Config.Scope;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
@@ -43,6 +45,11 @@ public class LoggerPublisherServiceProviderFactory implements PublisherServicePr
     @Override
     public String getId() {
         return "s8d-logger";
+    }
+
+    @Override
+    public Map<String, String> getOperationalInfo() {
+        return null;
     }
     
 }

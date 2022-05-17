@@ -11,7 +11,7 @@
 
     <artifactId>otp-mail-provider</artifactId>
     <packaging>jar</packaging>
-    <name>SpringSeed : Keycloak : OtpMailProvider</name>
+    <name>SpringSeed : Keycloak : OTP : Mail</name>
     <description>基于邮件的动态口令(OTP)</description>
 
     <dependencies>

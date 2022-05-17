@@ -9,10 +9,10 @@
         <version>17.0.1</version>
     </parent>
 
-    <artifactId>otp-sms-provider</artifactId>
+    <artifactId>mail-sender-mqtt-provider</artifactId>
     <packaging>jar</packaging>
-    <name>SpringSeed : Keycloak : OTP : SMS</name>
-    <description>基于短信(SMS)的动态口令(OTP)</description>
+    <name>SpringSeed : Keycloak : Mail : Sender : MQTT</name>
+    <description>发送邮件到MQTT</description>
 
     <dependencies>
         <dependency>
@@ -21,7 +21,7 @@
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
-            
+
         <dependency>
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-server-spi</artifactId>

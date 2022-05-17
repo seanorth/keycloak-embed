@@ -48,6 +48,10 @@ s8d.keycloak:
   mqttPublisher:
     provider: "s8d-logger"
 
+  emailSender:
+    provider: "s8d-mqtt"
+    topic: mail.topic    
+
 
 
 
