@@ -1,6 +1,8 @@
 package cn.springseed.keycloak.mqtt;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.keycloak.Config.Scope;
@@ -77,7 +79,19 @@ public class DefaultPublisherProperties {
 
     @Override
     public String toString() {
-        return ReflectionToStringBuilder.toString( this);
+        return ReflectionToStringBuilder.toStringExclude(this, "password");
+    }
+
+    public Map<String, String> toMap() {
+        final Map<String, String> rslt = new HashMap<>();
+        rslt.put("serverUri", this.serverUri);
+        rslt.put("username", this.username);
+        rslt.put("clientId", this.clientId);
+        rslt.put("automaticReconnect", String.valueOf(this.automaticReconnect));
+        rslt.put("cleanSession", String.valueOf(this.cleanSession));
+        rslt.put("connectionTimeout", String.valueOf(this.connectionTimeout));
+        rslt.put("keepAliveInterval", String.valueOf(this.keepAliveInterval));
+        return null;
     }
 
     

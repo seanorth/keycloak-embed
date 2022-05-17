@@ -11,7 +11,7 @@
 
     <artifactId>mqtt-publisher-provider</artifactId>
     <packaging>jar</packaging>
-    <name>SpringSeed : Keycloak : MQTT : Publish</name>
+    <name>SpringSeed : Keycloak : MQTT : Publisher</name>
     <description>支持MQTT发布</description>
 
     <properties>

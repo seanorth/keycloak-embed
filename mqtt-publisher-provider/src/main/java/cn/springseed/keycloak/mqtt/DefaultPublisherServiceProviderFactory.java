@@ -1,5 +1,7 @@
 package cn.springseed.keycloak.mqtt;
 
+import java.util.Map;
+
 import org.keycloak.Config.Scope;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
@@ -47,6 +49,11 @@ public class DefaultPublisherServiceProviderFactory implements PublisherServiceP
     @Override
     public String getId() {
         return "s8d-default";
+    }
+
+    @Override
+    public Map<String, String> getOperationalInfo() {
+        return properties.toMap();
     }
     
 }
