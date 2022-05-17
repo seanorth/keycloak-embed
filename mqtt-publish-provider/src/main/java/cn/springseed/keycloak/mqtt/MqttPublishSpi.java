@@ -1,4 +1,4 @@
-package cn.springseed.keycloak.spi;
+package cn.springseed.keycloak.mqtt;
 
 import org.keycloak.provider.Provider;
 import org.keycloak.provider.ProviderFactory;
@@ -10,7 +10,7 @@ import org.keycloak.provider.Spi;
  * @author PinWei Wan
  * @since 1.0.0
  */
-public class MqttSpi implements Spi {
+public class MqttPublishSpi implements Spi {
 
     @Override
     public boolean isInternal() {
@@ -19,17 +19,17 @@ public class MqttSpi implements Spi {
 
     @Override
     public String getName() {
-        return "mqtt";
+        return "mqttPublish";
     }
 
     @Override
     public Class<? extends Provider> getProviderClass() {
-        return MqttService.class;
+        return PublishService.class;
     }
 
     @Override
     public Class<? extends ProviderFactory<?>> getProviderFactoryClass() {
-        return MqttServiceProviderFactory.class;
+        return PublishServiceProviderFactory.class;
     }
     
 }

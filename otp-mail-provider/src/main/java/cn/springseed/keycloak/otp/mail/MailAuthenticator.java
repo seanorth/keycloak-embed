@@ -15,7 +15,7 @@ import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserModel;
 import org.keycloak.sessions.AuthenticationSessionModel;
 
-import cn.springseed.keycloak.spi.MqttService;
+import cn.springseed.keycloak.mqtt.PublishService;
 
 /**
  * 邮件认证器
@@ -61,7 +61,7 @@ public class MailAuthenticator implements Authenticator {
 					.ttl(Math.floorDiv(ttl, 60))
 					.mailTo(mail)
 					.templateCode(MAIL_TEMPLATE_CODE).locale(locale);
-			session.getProvider(MqttService.class).publish(properties.getTopic(), message.toJson());
+			session.getProvider(PublishService.class).publish(properties.getTopic(), message.toJson());
 
 			context.challenge(context.form().setAttribute("realm", context.getRealm()).createForm(TPL_CODE));
 		} catch (Exception e) {

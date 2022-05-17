@@ -17,7 +17,7 @@
     <dependencies>
         <dependency>
             <groupId>cn.springseed.keycloak</groupId>
-            <artifactId>mqtt-provider</artifactId>
+            <artifactId>mqtt-publish-provider</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>

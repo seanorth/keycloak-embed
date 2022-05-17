@@ -1,4 +1,4 @@
-package cn.springseed.keycloak.spi;
+package cn.springseed.keycloak.mqtt;
 
 import java.util.Locale;
 
@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Getter
 @Slf4j
-public class MqttConfig {
+public class PublishProperties {
     /** 模拟标志，如果true，则将消息打印到控制台 */
     private boolean simulation;
     /** 服务地址 */
@@ -39,14 +39,14 @@ public class MqttConfig {
     /** 保持连接, 单位秒 */
     private int keepAliveInterval;
 
-    private MqttConfig() {
+    private PublishProperties() {
     }
 
-    public static MqttConfig create() {
-        return new MqttConfig();
+    public static PublishProperties create() {
+        return new PublishProperties();
     }
 
-    public MqttConfig from(Scope config) {
+    public PublishProperties from(Scope config) {
         this.simulation = Boolean.valueOf(resolveConfigVar(config, "simulation", "true"));
         if (this.simulation) {
             return this;

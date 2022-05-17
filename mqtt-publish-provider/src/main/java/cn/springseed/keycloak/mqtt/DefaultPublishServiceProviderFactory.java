@@ -1,4 +1,4 @@
-package cn.springseed.keycloak.spi;
+package cn.springseed.keycloak.mqtt;
 
 import org.keycloak.Config.Scope;
 import org.keycloak.models.KeycloakSession;
@@ -10,17 +10,17 @@ import org.keycloak.models.KeycloakSessionFactory;
  * @author PinWei Wan
  * @since 1.0.0
  */
-public class DefaultMqttServiceProviderFactory implements MqttServiceProviderFactory {
-    private MqttConfig cfg;
+public class DefaultPublishServiceProviderFactory implements PublishServiceProviderFactory {
+    private PublishProperties properties;
 
     @Override
-    public MqttService create(KeycloakSession session) {
-        return MqttServiceFactory.get(cfg, session);
+    public PublishService create(KeycloakSession session) {
+        return PublishServiceFactory.get(properties, session);
     }
 
     @Override
     public void init(Scope config) {
-        cfg = MqttConfig.create().from(config);
+        properties = PublishProperties.create().from(config);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class DefaultMqttServiceProviderFactory implements MqttServiceProviderFac
 
     @Override
     public String getId() {
-        return "s8d-mqtt-client";
+        return "s8d-default";
     }
     
 }

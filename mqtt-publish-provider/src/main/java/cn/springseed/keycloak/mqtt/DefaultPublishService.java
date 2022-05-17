@@ -1,4 +1,4 @@
-package cn.springseed.keycloak.spi;
+package cn.springseed.keycloak.mqtt;
 
 import java.util.Objects;
 
@@ -16,11 +16,11 @@ import lombok.extern.slf4j.Slf4j;
  * @since 1.0.0
  */
 @Slf4j
-public class DefaultMqttService implements MqttService {
-    private MqttConfig config;
+public class DefaultPublishService implements PublishService {
+    private final PublishProperties properties;
 
-    public DefaultMqttService(MqttConfig config) {
-        this.config = config;
+    public DefaultPublishService(PublishProperties properties) {
+        this.properties = properties;
     }
 
     @Override
@@ -38,15 +38,15 @@ public class DefaultMqttService implements MqttService {
         }
 
         try {
-            MqttClient client = new MqttClient(config.getServerUri(), config.getClientId());
+            MqttClient client = new MqttClient(properties.getServerUri(), properties.getClientId());
             MqttConnectOptions options = new MqttConnectOptions();
-            options.setAutomaticReconnect(config.isAutomaticReconnect());
-            options.setCleanSession(config.isCleanSession());
-            options.setConnectionTimeout(config.getConnectionTimeout());
-            options.setKeepAliveInterval(config.getKeepAliveInterval());
+            options.setAutomaticReconnect(properties.isAutomaticReconnect());
+            options.setCleanSession(properties.isCleanSession());
+            options.setConnectionTimeout(properties.getConnectionTimeout());
+            options.setKeepAliveInterval(properties.getKeepAliveInterval());
 
-            final String username = config.getUsername();
-            final String password = config.getPassword();
+            final String username = properties.getUsername();
+            final String password = properties.getPassword();
             if (StringUtils.isNotBlank(username) && StringUtils.isNotBlank(password) ) {
                 options.setUserName(username);
                 options.setPassword(password.toCharArray());

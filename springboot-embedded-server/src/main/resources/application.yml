@@ -38,7 +38,7 @@ springseed.keycloak:
     default:
      showSql: false
 
-  # mqtt:
+  # mqttPublish:
   #   provider: "s8d-mqtt-client"
   #   simulation: true
   #   serverUri: 1

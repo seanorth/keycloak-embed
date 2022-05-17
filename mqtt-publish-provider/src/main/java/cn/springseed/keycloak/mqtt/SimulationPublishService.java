@@ -1,4 +1,4 @@
-package cn.springseed.keycloak.spi;
+package cn.springseed.keycloak.mqtt;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
  * @since 1.0.0
  */
 @Slf4j
-public class SimulationMqttService implements MqttService {
+public class SimulationPublishService implements PublishService {
 
     @Override
     public void close() {     

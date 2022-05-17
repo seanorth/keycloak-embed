@@ -1,4 +1,4 @@
-package cn.springseed.keycloak.spi;
+package cn.springseed.keycloak.mqtt;
 
 import org.keycloak.provider.ProviderFactory;
 
@@ -8,6 +8,6 @@ import org.keycloak.provider.ProviderFactory;
  * @author PinWei Wan
  * @since 1.0.0
  */
-public interface MqttServiceProviderFactory extends ProviderFactory<MqttService> {
+public interface PublishServiceProviderFactory extends ProviderFactory<PublishService> {
     
 }

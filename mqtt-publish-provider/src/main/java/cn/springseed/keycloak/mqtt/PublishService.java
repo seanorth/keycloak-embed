@@ -1,4 +1,4 @@
-package cn.springseed.keycloak.spi;
+package cn.springseed.keycloak.mqtt;
 
 import org.keycloak.provider.Provider;
 
@@ -8,7 +8,7 @@ import org.keycloak.provider.Provider;
  * @author PinWei Wan
  * @since 1.0.0
  */
-public interface MqttService extends Provider {
+public interface PublishService extends Provider {
     
     /**
      * 发布消息
