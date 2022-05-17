@@ -16,10 +16,10 @@ import lombok.extern.slf4j.Slf4j;
  * @since 1.0.0
  */
 @Slf4j
-public class DefaultPublishService implements PublishService {
-    private final PublishProperties properties;
+public class DefaultPublisherService implements PublisherService {
+    private final DefaultPublisherProperties properties;
 
-    public DefaultPublishService(PublishProperties properties) {
+    public DefaultPublisherService(DefaultPublisherProperties properties) {
         this.properties = properties;
     }
 

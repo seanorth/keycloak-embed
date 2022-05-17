@@ -21,7 +21,7 @@
     <dependencies>
         <dependency>
             <groupId>cn.springseed.keycloak</groupId>
-            <artifactId>mqtt-publish-provider</artifactId>
+            <artifactId>mqtt-publisher-provider</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -69,18 +69,17 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -123,17 +122,28 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <addResources>true</addResources>
-                </configuration>
                 <executions>
                     <execution>
                         <goals>
-                            <goal>repackage</goal>
+                            <goal>build-info</goal>
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <excludeDevtools>true</excludeDevtools>
+                    <requiresUnpack>
+                        <dependency>
+                            <groupId>org.keycloak</groupId>
+                            <artifactId>keycloak-connections-jpa</artifactId>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.keycloak</groupId>
+                            <artifactId>keycloak-model-jpa</artifactId>
+                        </dependency>
+                    </requiresUnpack>
+                </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -143,6 +153,7 @@
                     </nonFilteredFileExtensions>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>

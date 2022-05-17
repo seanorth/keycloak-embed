@@ -1,4 +1,4 @@
-# mqtt-publish-provider
+# mqtt-publisher-provider
 
 #### 参考
 

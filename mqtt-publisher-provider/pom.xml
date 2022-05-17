@@ -9,7 +9,7 @@
         <version>17.0.1</version>
     </parent>
 
-    <artifactId>mqtt-publish-provider</artifactId>
+    <artifactId>mqtt-publisher-provider</artifactId>
     <packaging>jar</packaging>
     <name>SpringSeed : Keycloak : MQTT : Publish</name>
     <description>支持MQTT发布</description>

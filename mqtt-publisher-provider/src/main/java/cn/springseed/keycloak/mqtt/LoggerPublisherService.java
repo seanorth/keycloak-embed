@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
  * @since 1.0.0
  */
 @Slf4j
-public class SimulationPublishService implements PublishService {
+public class LoggerPublisherService implements PublisherService {
 
     @Override
     public void close() {     

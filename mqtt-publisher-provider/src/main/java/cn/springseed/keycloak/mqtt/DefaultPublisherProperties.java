@@ -2,6 +2,7 @@ package cn.springseed.keycloak.mqtt;
 
 import java.util.Locale;
 
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.keycloak.Config.Scope;
 
 import lombok.Getter;
@@ -18,9 +19,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Getter
 @Slf4j
-public class PublishProperties {
-    /** 模拟标志，如果true，则将消息打印到控制台 */
-    private boolean simulation;
+public class DefaultPublisherProperties {
     /** 服务地址 */
     private String serverUri;
     /** 用户名 */
@@ -39,19 +38,14 @@ public class PublishProperties {
     /** 保持连接, 单位秒 */
     private int keepAliveInterval;
 
-    private PublishProperties() {
+    private DefaultPublisherProperties() {
     }
 
-    public static PublishProperties create() {
-        return new PublishProperties();
+    public static DefaultPublisherProperties create() {
+        return new DefaultPublisherProperties();
     }
 
-    public PublishProperties from(Scope config) {
-        this.simulation = Boolean.valueOf(resolveConfigVar(config, "simulation", "true"));
-        if (this.simulation) {
-            return this;
-        }
-
+    public DefaultPublisherProperties from(Scope config) {
         this.serverUri = resolveConfigVar(config, "serverUri", "tcp://localhost:1883");
         this.username = resolveConfigVar(config, "password", "");
         this.password = resolveConfigVar(config, "password", "");
@@ -60,6 +54,8 @@ public class PublishProperties {
         this.connectionTimeout = Integer.valueOf(resolveConfigVar(config, "connectionTimeout", "10"));
         this.keepAliveInterval = Integer.valueOf(resolveConfigVar(config, "keepAliveInterval", "60"));
         this.clientId = resolveConfigVar(config, "clientId", "keycloak");
+
+        log.info(this.toString());
         return this;
     }
 
@@ -76,10 +72,13 @@ public class PublishProperties {
                 value = env;
             }
         }
-        if (!"password".equals(variableName)) {
-            log.info("mqtt-provider configuration: {}={}", variableName, value);
-        }
         return value;
-
     }
+
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString( this);
+    }
+
+    
 }

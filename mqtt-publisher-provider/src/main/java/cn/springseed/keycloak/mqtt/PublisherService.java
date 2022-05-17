@@ -8,7 +8,7 @@ import org.keycloak.provider.Provider;
  * @author PinWei Wan
  * @since 1.0.0
  */
-public interface PublishService extends Provider {
+public interface PublisherService extends Provider {
     
     /**
      * 发布消息

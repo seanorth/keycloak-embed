@@ -10,7 +10,7 @@ import org.keycloak.provider.Spi;
  * @author PinWei Wan
  * @since 1.0.0
  */
-public class MqttPublishSpi implements Spi {
+public class MqttPublisherSpi implements Spi {
 
     @Override
     public boolean isInternal() {
@@ -19,17 +19,17 @@ public class MqttPublishSpi implements Spi {
 
     @Override
     public String getName() {
-        return "mqttPublish";
+        return "mqttPublisher";
     }
 
     @Override
     public Class<? extends Provider> getProviderClass() {
-        return PublishService.class;
+        return PublisherService.class;
     }
 
     @Override
     public Class<? extends ProviderFactory<?>> getProviderFactoryClass() {
-        return PublishServiceProviderFactory.class;
+        return PublisherServiceProviderFactory.class;
     }
     
 }

@@ -8,6 +8,6 @@ import org.keycloak.provider.ProviderFactory;
  * @author PinWei Wan
  * @since 1.0.0
  */
-public interface PublishServiceProviderFactory extends ProviderFactory<PublishService> {
+public interface PublisherServiceProviderFactory extends ProviderFactory<PublisherService> {
     
 }

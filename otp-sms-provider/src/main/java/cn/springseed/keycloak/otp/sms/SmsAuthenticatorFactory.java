@@ -10,22 +10,33 @@ import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
 import org.keycloak.provider.ProviderConfigProperty;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 短信认证器工厂
  *  
  * @author PinWei Wan
  * @since 1.0.0
  */
+@Slf4j
 public class SmsAuthenticatorFactory implements AuthenticatorFactory {
     public static final String PROVIDER_ID = "s8d-otp-sms";
 
     @Override
     public Authenticator create(KeycloakSession session) {
-        return new SmsAuthenticator();
+        final Authenticator rslt = new SmsAuthenticator();
+
+        if (log.isDebugEnabled()) {
+            log.info("Created successfully: {}", rslt.toString());
+        }
+        return rslt;        
     }
 
     @Override
-    public void init(Scope config) {       
+    public void init(Scope config) {
+        if (log.isDebugEnabled()) {
+            log.info("Initialization succeeded");    
+        }    
     }
 
     @Override
