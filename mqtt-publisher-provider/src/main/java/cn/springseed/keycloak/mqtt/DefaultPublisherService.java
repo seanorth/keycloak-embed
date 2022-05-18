@@ -2,7 +2,6 @@ package cn.springseed.keycloak.mqtt;
 
 import java.util.Objects;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
@@ -17,9 +16,9 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class DefaultPublisherService implements PublisherService {
-    private final DefaultPublisherProperties properties;
+    private final PublisherProperties properties;
 
-    public DefaultPublisherService(DefaultPublisherProperties properties) {
+    public DefaultPublisherService(PublisherProperties properties) {
         this.properties = properties;
     }
 
@@ -38,20 +37,10 @@ public class DefaultPublisherService implements PublisherService {
         }
 
         try {
-            MqttClient client = new MqttClient(properties.getServerUri(), properties.getClientId());
-            MqttConnectOptions options = new MqttConnectOptions();
-            options.setAutomaticReconnect(properties.isAutomaticReconnect());
-            options.setCleanSession(properties.isCleanSession());
-            options.setConnectionTimeout(properties.getConnectionTimeout());
-            options.setKeepAliveInterval(properties.getKeepAliveInterval());
-
-            final String username = properties.getUsername();
-            final String password = properties.getPassword();
-            if (StringUtils.isNotBlank(username) && StringUtils.isNotBlank(password) ) {
-                options.setUserName(username);
-                options.setPassword(password.toCharArray());
-            }
+            MqttClient client = properties.mqttClient();
+            MqttConnectOptions options = properties.mqttConnectOptions();
             client.connect(options);
+
             MqttMessage payload = toPayload(message);
             payload.setQos(0);
             payload.setRetained(true);

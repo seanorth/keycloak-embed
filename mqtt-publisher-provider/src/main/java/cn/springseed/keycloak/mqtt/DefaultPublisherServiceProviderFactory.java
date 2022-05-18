@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class DefaultPublisherServiceProviderFactory implements PublisherServiceProviderFactory {
-    private DefaultPublisherProperties properties;
+    private PublisherProperties properties;
 
     @Override
     public PublisherService create(KeycloakSession session) {
@@ -30,7 +30,7 @@ public class DefaultPublisherServiceProviderFactory implements PublisherServiceP
 
     @Override
     public void init(Scope config) {
-        properties = DefaultPublisherProperties.create().from(config);
+        properties = PublisherProperties.create(config);
 
         if (log.isDebugEnabled()) {
             log.info("Initialization succeeded");
