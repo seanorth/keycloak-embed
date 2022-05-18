@@ -23,6 +23,7 @@
         <module>theme-provider</module>
         <module>mqtt-publisher-provider</module>
         <module>mail-sender-mqtt-provider</module>
+        <module>event-listener-mqtt-provider</module>
     </modules>
 
     <dependencyManagement>

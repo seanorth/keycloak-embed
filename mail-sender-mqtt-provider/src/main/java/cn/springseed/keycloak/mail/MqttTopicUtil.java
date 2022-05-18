@@ -18,8 +18,8 @@ public class MqttTopicUtil {
 
 
 	public String getTopic(final String realmId) {
-        String routingKey = TOPIC_KEY_PREFIX + realmId;
-		return normalizeKey(routingKey).toUpperCase();
+        String topic = TOPIC_KEY_PREFIX + realmId;
+		return normalizeKey(topic).toUpperCase();
     }
 
 	private String normalizeKey(CharSequence stringToNormalize) {

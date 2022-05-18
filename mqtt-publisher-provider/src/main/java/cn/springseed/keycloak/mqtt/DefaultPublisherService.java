@@ -1,5 +1,6 @@
 package cn.springseed.keycloak.mqtt;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -47,12 +48,12 @@ public class DefaultPublisherService implements PublisherService {
             client.publish(topic, payload);
             client.disconnect();
         } catch (Exception e) {
-            log.error("", e);
+            throw new MqttPublishException(e);
         }
     }
 
     private MqttMessage toPayload(String s) {
-        byte[] payload = s.getBytes();
+        byte[] payload = s.getBytes(StandardCharsets.UTF_8);
         return new MqttMessage(payload);
     }
 }

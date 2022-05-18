@@ -7,6 +7,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+
 import org.keycloak.util.JsonSerialization;
 
 import lombok.Getter;
@@ -18,6 +24,9 @@ import lombok.Getter;
  * @author PinWei Wan
  * @since 1.0.0
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
+@XmlRootElement
+@JsonTypeInfo(use = Id.CLASS)
 @Getter
 public class Message {
     /** 收件人 */
