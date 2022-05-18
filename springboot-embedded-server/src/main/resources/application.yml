@@ -50,7 +50,7 @@ s8d.keycloak:
 
   emailSender:
     provider: "s8d-mqtt"
-    topic: mail.topic    
+    topic: mail/keycloak    
 
 
 

@@ -17,14 +17,12 @@ import cn.springseed.keycloak.mqtt.PublisherService;
  * @since 1.0.0
  */
 public class MqttEmailSenderProvider implements EmailSenderProvider {
-    private static final String MAIL_TEMPLATE_CODE = "KK.";
+    private static final String MAIL_TEMPLATE_CODE = "KEYCLOAK.CREDENTIAL_RESET";
 
     private final KeycloakSession session;
-    private final String topic;
 
-    public MqttEmailSenderProvider(KeycloakSession session, String topic) {
+    public MqttEmailSenderProvider(KeycloakSession session) {
         this.session = session;
-        this.topic = topic;
     }
 
     @Override
@@ -47,6 +45,8 @@ public class MqttEmailSenderProvider implements EmailSenderProvider {
                     .htmlBody(htmlBody)
                     .templateCode(MAIL_TEMPLATE_CODE)
                     .locale(locale);
+            
+            final String topic = MqttTopicUtil.getTopic(session.getContext().getRealm().getId());
             session.getProvider(PublisherService.class).publish(topic, message.toJson());
         } catch (Exception e) {
             throw new EmailException(e);

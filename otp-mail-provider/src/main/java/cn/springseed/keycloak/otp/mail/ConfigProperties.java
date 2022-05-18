@@ -17,28 +17,23 @@ import lombok.Getter;
 public class ConfigProperties {
     private final int length;
     private final int ttl;
-    private final String topic;
 
-    public ConfigProperties(int length, int ttl, String topic) {
+    public ConfigProperties(int length, int ttl) {
         this.length = length;
         this.ttl = ttl;
-        this.topic = topic;
     }
 
     public static ConfigProperties readConfigVar(Map<String, String> config) {
         final int length = Integer.valueOf(Properties.LENGTH.resolveConfigVar(config));
         final int ttl = Integer.valueOf(Properties.TTL.resolveConfigVar(config));
-        final String topic = Properties.TOPIC.resolveConfigVar(config);
 
-        return new ConfigProperties(length, ttl, topic);
+        return new ConfigProperties(length, ttl);
     }
 
     @Getter
     public enum Properties {
         LENGTH("length", "Code length", "The number of digits of the generated code.", 6),
-        TTL("ttl", "Time-to-live", "The time to live in seconds for the code to be valid.", 300),
-        TOPIC("topic", "MQTT Topic", "MQTT topics are a form of addressing that allows MQTT clients to share information.",
-                "sms.topic");
+        TTL("ttl", "Time-to-live", "The time to live in seconds for the code to be valid.", 300);
     
         private final String code;
         private final String label;
@@ -69,9 +64,7 @@ public class ConfigProperties {
                     new ProviderConfigProperty(LENGTH.getCode(), LENGTH.getLabel(), LENGTH.getHelpText(),
                             ProviderConfigProperty.STRING_TYPE, LENGTH.getDefaultValue()),
                     new ProviderConfigProperty(TTL.getCode(), TTL.getLabel(), TTL.getHelpText(),
-                            ProviderConfigProperty.STRING_TYPE, TTL.getDefaultValue()),
-                    new ProviderConfigProperty(TOPIC.getCode(), TOPIC.getLabel(), TOPIC.getHelpText(),
-                            ProviderConfigProperty.STRING_TYPE, TOPIC.getDefaultValue()));
+                            ProviderConfigProperty.STRING_TYPE, TTL.getDefaultValue()));
         }
     }
 }

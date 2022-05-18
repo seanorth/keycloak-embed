@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Getter
 @Slf4j
-public class PublisherProperties {
+public class ConfigProperties {
     /** 服务地址 */
     private String serverUri;
     /** 用户名 */
@@ -41,7 +41,7 @@ public class PublisherProperties {
     /** 保持连接, 单位秒 */
     private int keepAliveInterval;
 
-    private PublisherProperties(String serverUri, String username, String password, String clientId,
+    private ConfigProperties(String serverUri, String username, String password, String clientId,
             boolean automaticReconnect, boolean cleanSession, int connectionTimeout, int keepAliveInterval) {
         this.serverUri = serverUri;
         this.username = username;
@@ -53,8 +53,8 @@ public class PublisherProperties {
         this.keepAliveInterval = keepAliveInterval;
     }
 
-    public static PublisherProperties create(Scope config) {
-        final PublisherProperties rslt = Properties.publisherProperties(config);
+    public static ConfigProperties create(Scope config) {
+        final ConfigProperties rslt = Properties.configProperties(config);
         log.info(rslt.toString());
         return rslt;
     }
@@ -122,7 +122,7 @@ public class PublisherProperties {
             if (config != null && config.get(this.code) != null) {
                 value = config.get(this.code);
             } else {
-                // 尝试从环境变量中读取配置信息，如: KK_TO_RMQ_SERVERURI:
+                // 尝试从环境变量中读取配置信息，如: S8D_MQTT_SERVERURI:
                 String envVariableName = "S8D_MQTT_" + this.code.toUpperCase(Locale.ENGLISH);
                 String env = System.getenv(envVariableName);
                 if (env != null) {
@@ -132,7 +132,7 @@ public class PublisherProperties {
             return value;
         }
 
-        public static PublisherProperties publisherProperties(final Scope config) {
+        public static ConfigProperties configProperties(final Scope config) {
             final String serverUri = SERVER_URI.resolveConfigVar(config);
             final String username = USERNAME.resolveConfigVar(config);
             final String password = PASSWORD.resolveConfigVar(config);
@@ -143,7 +143,7 @@ public class PublisherProperties {
             final int keepAliveInterval = Integer.parseInt(KEEP_ALIVE_INTERVAL.resolveConfigVar(config));
             final String clientId = CLIENT_ID.resolveConfigVar(config);
     
-            return new PublisherProperties(serverUri, username, password, clientId,
+            return new ConfigProperties(serverUri, username, password, clientId,
                     automaticReconnect, cleanSession, connectionTimeout, keepAliveInterval);
         }
     }

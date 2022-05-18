@@ -24,7 +24,7 @@ import cn.springseed.keycloak.mqtt.PublisherService;
  * @since 1.0.0
  */
 public class MailAuthenticator implements Authenticator {
-	private static final String MAIL_TEMPLATE_CODE = "KK.OTP-MAIL";
+	private static final String MAIL_TEMPLATE_CODE = "KEYCLOAK.OTP-MAIL";
 	private static final String TPL_CODE = "s8d-otp-mail.ftl";
 	private static final String EMAIL_ATTR = "email";
 
@@ -61,7 +61,8 @@ public class MailAuthenticator implements Authenticator {
 					.ttl(Math.floorDiv(ttl, 60))
 					.mailTo(mail)
 					.templateCode(MAIL_TEMPLATE_CODE).locale(locale);
-			session.getProvider(PublisherService.class).publish(properties.getTopic(), message.toJson());
+			final String realm = MqttTopicUtil.getTopic(session.getContext().getRealm().getId());
+			session.getProvider(PublisherService.class).publish(realm, message.toJson());
 
 			context.challenge(context.form().setAttribute("realm", context.getRealm()).createForm(TPL_CODE));
 		} catch (Exception e) {

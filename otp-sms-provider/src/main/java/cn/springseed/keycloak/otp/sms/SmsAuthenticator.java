@@ -19,29 +19,30 @@ import cn.springseed.keycloak.mqtt.PublisherService;
 
 /**
  * 短信认证器
- *  
+ * 
  * @author PinWei Wan
  * @since 1.0.0
  */
 public class SmsAuthenticator implements Authenticator {
-	private static final String SMS_TEMPLATE_CODE = "KK.OTP-SMS";
-    private static final String TPL_CODE = "s8d-otp-sms.ftl";
-    private static final String PHONE_NUMBER_ATTR = "phoneNumber";
+	private static final String SMS_TEMPLATE_CODE = "KEYCLOAK.OTP-SMS";
+	private static final String TPL_CODE = "s8d-otp-sms.ftl";
+	private static final String PHONE_NUMBER_ATTR = "phoneNumber";
 
 	@Override
-    public void close() {
-        
-    }
+	public void close() {
 
-    @Override
-    public void authenticate(AuthenticationFlowContext context) {
+	}
+
+	@Override
+	public void authenticate(AuthenticationFlowContext context) {
 		AuthenticatorConfigModel configModel = context.getAuthenticatorConfig();
 		KeycloakSession session = context.getSession();
 		UserModel user = context.getUser();
 		final ConfigProperties properties = ConfigProperties.readConfigVar(configModel.getConfig());
 
 		String mobileNumber = user.getFirstAttribute(PHONE_NUMBER_ATTR);
-		// mobileNumber of course has to be further validated on proper format, country code, ...
+		// mobileNumber of course has to be further validated on proper format, country
+		// code, ...
 
 		int length = properties.getLength();
 		int ttl = properties.getTtl();
@@ -62,20 +63,21 @@ public class SmsAuthenticator implements Authenticator {
 					.ttl(Math.floorDiv(ttl, 60))
 					.phoneNumber(mobileNumber)
 					.templateCode(SMS_TEMPLATE_CODE).locale(locale);
-			session.getProvider(PublisherService.class).publish(properties.getTopic(), message.toJson());
+			final String realm = MqttTopicUtil.getTopic(session.getContext().getRealm().getId());
+			session.getProvider(PublisherService.class).publish(realm, message.toJson());
 
 			context.challenge(context.form().setAttribute("realm", context.getRealm()).createForm(TPL_CODE));
 		} catch (Exception e) {
 			context.failureChallenge(AuthenticationFlowError.INTERNAL_ERROR,
-				context.form().setError("smsAuthSmsNotSent", e.getMessage())
-					.createErrorPage(Response.Status.INTERNAL_SERVER_ERROR));
+					context.form().setError("smsAuthSmsNotSent", e.getMessage())
+							.createErrorPage(Response.Status.INTERNAL_SERVER_ERROR));
 		}
-        
-    }
 
-    @Override
-    public void action(AuthenticationFlowContext context) {
-        String enteredCode = context.getHttpRequest().getDecodedFormParameters().getFirst("code");
+	}
+
+	@Override
+	public void action(AuthenticationFlowContext context) {
+		String enteredCode = context.getHttpRequest().getDecodedFormParameters().getFirst("code");
 
 		AuthenticationSessionModel authSession = context.getAuthenticationSession();
 		String code = authSession.getAuthNote("code");
@@ -83,17 +85,17 @@ public class SmsAuthenticator implements Authenticator {
 
 		if (code == null || ttl == null) {
 			context.failureChallenge(AuthenticationFlowError.INTERNAL_ERROR,
-				context.form().createErrorPage(Response.Status.INTERNAL_SERVER_ERROR));
+					context.form().createErrorPage(Response.Status.INTERNAL_SERVER_ERROR));
 			return;
 		}
 
-        // 验证码有效期判断
+		// 验证码有效期判断
 		boolean isValid = enteredCode.equals(code);
 		if (isValid) {
 			if (Long.parseLong(ttl) < System.currentTimeMillis()) {
 				// 已过期(expired)
 				context.failureChallenge(AuthenticationFlowError.EXPIRED_CODE,
-					context.form().setError("smsAuthCodeExpired").createErrorPage(Response.Status.BAD_REQUEST));
+						context.form().setError("smsAuthCodeExpired").createErrorPage(Response.Status.BAD_REQUEST));
 			} else {
 				// 有效的(valid)
 				context.success();
@@ -103,27 +105,27 @@ public class SmsAuthenticator implements Authenticator {
 			AuthenticationExecutionModel execution = context.getExecution();
 			if (execution.isRequired()) {
 				context.failureChallenge(AuthenticationFlowError.INVALID_CREDENTIALS,
-					context.form().setAttribute("realm", context.getRealm())
-						.setError("smsAuthCodeInvalid").createForm(TPL_CODE));
+						context.form().setAttribute("realm", context.getRealm())
+								.setError("smsAuthCodeInvalid").createForm(TPL_CODE));
 			} else if (execution.isConditional() || execution.isAlternative()) {
 				context.attempted();
 			}
 		}
-        
-    }
 
-    @Override
-    public boolean requiresUser() {
-        return true;
-    }
+	}
 
-    @Override
-    public boolean configuredFor(KeycloakSession session, RealmModel realm, UserModel user) {
-        return user.getFirstAttribute(PHONE_NUMBER_ATTR) != null;
-    }
+	@Override
+	public boolean requiresUser() {
+		return true;
+	}
 
-    @Override
-    public void setRequiredActions(KeycloakSession session, RealmModel realm, UserModel user) {
-        
-    }
+	@Override
+	public boolean configuredFor(KeycloakSession session, RealmModel realm, UserModel user) {
+		return user.getFirstAttribute(PHONE_NUMBER_ATTR) != null;
+	}
+
+	@Override
+	public void setRequiredActions(KeycloakSession session, RealmModel realm, UserModel user) {
+
+	}
 }
