@@ -28,17 +28,17 @@ public class SmsAuthenticator implements Authenticator {
     private static final String TPL_CODE = "s8d-otp-sms.ftl";
     private static final String PHONE_NUMBER_ATTR = "phoneNumber";
 
-    @Override
+	@Override
     public void close() {
         
     }
 
     @Override
     public void authenticate(AuthenticationFlowContext context) {
-		AuthenticatorConfigModel config = context.getAuthenticatorConfig();
+		AuthenticatorConfigModel configModel = context.getAuthenticatorConfig();
 		KeycloakSession session = context.getSession();
 		UserModel user = context.getUser();
-		ConfigProperties properties = ConfigProperties.of(config);
+		final ConfigProperties properties = ConfigProperties.readConfigVar(configModel.getConfig());
 
 		String mobileNumber = user.getFirstAttribute(PHONE_NUMBER_ATTR);
 		// mobileNumber of course has to be further validated on proper format, country code, ...

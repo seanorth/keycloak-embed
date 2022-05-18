@@ -35,10 +35,10 @@ public class MailAuthenticator implements Authenticator {
 
 	@Override
 	public void authenticate(AuthenticationFlowContext context) {
-		AuthenticatorConfigModel config = context.getAuthenticatorConfig();
+		AuthenticatorConfigModel configModel = context.getAuthenticatorConfig();
 		KeycloakSession session = context.getSession();
 		UserModel user = context.getUser();
-		ConfigProperties properties = ConfigProperties.of(config);
+		final ConfigProperties properties = ConfigProperties.readConfigVar(configModel.getConfig());
 
 		String mail = user.getFirstAttribute(EMAIL_ATTR);
 
