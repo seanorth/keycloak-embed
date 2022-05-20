@@ -16,14 +16,14 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class LoggerPublisherServiceProviderFactory implements PublisherServiceProviderFactory {
+    private static final PublisherService SINGLETON = new LoggerPublisherService();
+
     @Override
     public PublisherService create(KeycloakSession session) {
-        final PublisherService rslt = new LoggerPublisherService();
-
         if (log.isDebugEnabled()) {
-            log.info("Created successfully: {}", rslt.toString());
+            log.info("Created successfully: {}", SINGLETON.toString());
         }
-        return rslt;
+        return SINGLETON;
     }
 
     @Override

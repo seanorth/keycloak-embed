@@ -17,20 +17,20 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DefaultPublisherServiceProviderFactory implements PublisherServiceProviderFactory {
     private ConfigProperties properties;
+    private static PublisherService SINGLETON = null;
 
     @Override
     public PublisherService create(KeycloakSession session) {
-        final PublisherService rslt = new DefaultPublisherService(properties);
-
         if (log.isDebugEnabled()) {
-            log.info("Created successfully: {}", rslt.toString());
+            log.info("Created successfully: {}", SINGLETON.toString());
         }
-        return rslt;
+        return SINGLETON;
     }
 
     @Override
     public void init(Scope config) {
         properties = ConfigProperties.create(config);
+        SINGLETON = new DefaultPublisherService(properties);
 
         if (log.isDebugEnabled()) {
             log.info("Initialization succeeded");

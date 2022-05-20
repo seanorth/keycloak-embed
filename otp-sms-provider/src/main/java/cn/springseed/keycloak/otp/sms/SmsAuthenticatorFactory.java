@@ -21,15 +21,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SmsAuthenticatorFactory implements AuthenticatorFactory {
     public static final String PROVIDER_ID = "s8d-otp-sms";
+    private static final Authenticator SINGLETON = new SmsAuthenticator();
 
     @Override
     public Authenticator create(KeycloakSession session) {
-        final Authenticator rslt = new SmsAuthenticator();
-
         if (log.isDebugEnabled()) {
-            log.info("Created successfully: {}", rslt.toString());
+            log.info("Created successfully: {}", SINGLETON.toString());
         }
-        return rslt;        
+        return SINGLETON;        
     }
 
     @Override
