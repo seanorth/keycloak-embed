@@ -1,17 +1,17 @@
 # keycloak-extensions
 
-##### 1. Keycloak SPI 插件： s8d-oidc-lucky-number-mapper  
+## 1. Keycloak SPI 插件： s8d-oidc-lucky-number-mapper  
 
 OIDC协议的令牌映射器
 
 可以配置这个映射器，设置上限和下限数值，映射器会随机生成之间的一个数值，并保存到令牌中
 
-## Keycloak设置
+### Keycloak设置
 1. 启动项目`springboot-embedded-server`
 2. 管理员登录Keycloak界面，在 `Clients > 选择 public-client > Mappers > 点击 create` ，在界面中填如下值(其他项保持默认值)：`name` -> Lucky Number Mapper, `Mapper Type` -> Lucky Number, `Token Claim Name` -> myLuckyNumber
 3. 点击Save
 
-## 帮助
+### 帮助
 
 设置完成后，首先登录获取令牌：
 
@@ -67,7 +67,24 @@ curl --location --request GET 'http://localhost:9000/auth/realms/springseeds/pro
 
 返回结果中包含`myLuckyNumber`信息，而且每次请求的值不一样的
 
- 
+## 2. Keycloak SPI 插件： s8d-bcrypt, s8d-noop
+
+自定义密码加密算法。`Keycloak`提供默认的加密算法`pbkdf2-sha256`，已经满足使用了；有些特殊情况，如：用户的密码来自外部系统，这种情况下，就必须与外部系统的加密方式一致。
+
+此插件使用`BCrypt`算法，代码引用`org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder`类， 框架`spring-security-crypto`中提供有许多的加密算法。
+
+### Keycloak设置
+1. 启动项目`springboot-embedded-server`
+2. 管理员登录Keycloak界面，在 `Authertication > Password > 点击 Add policy... > 选择 Hashing Algorithm` ，在 `Policy Value` 中填入 `s8d-bcrpt`
+3. 点击Save
+
+每个realm，每个用户可以定义不同的加密方式，在Keycloak中新定义的算法不影响以存在的用户登录。
+
+查看用户密码加密信息
+1. 管理员登录Keycloak界面，在 `Users > 点击 View all users > 任意选择记录 > Credentials > Manage Credentials `
+2. 找到 `Type` 是 `password` 的记录，点击 `Show data...`
+
+**s8d-noop** 是明文密码，请谨慎使用
 
 
 
