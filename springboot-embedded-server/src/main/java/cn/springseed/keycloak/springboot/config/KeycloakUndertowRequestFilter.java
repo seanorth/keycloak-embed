@@ -15,7 +15,7 @@ import org.keycloak.services.filters.AbstractRequestFilter;
  * 请求过滤器
  *  
  * @author PinWei Wan
- * @since 1.0.0
+ * @since 17.0.1
  */
 public class KeycloakUndertowRequestFilter extends AbstractRequestFilter implements Filter {
 

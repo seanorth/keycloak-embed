@@ -4,7 +4,7 @@ package cn.springseed.keycloak.mqtt;
  * 发送异常
  *  
  * @author PinWei Wan
- * @since 1.0.0
+ * @since 17.0.1
  */
 public class MqttPublishException extends RuntimeException {
 

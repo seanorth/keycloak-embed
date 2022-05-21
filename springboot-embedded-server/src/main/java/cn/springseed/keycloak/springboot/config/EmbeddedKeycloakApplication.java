@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
  * 继承{@link KeycloakApplication}，实现创建用户和导入realm功能
  *  
  * @author PinWei Wan
- * @since 1.0.0
+ * @since 17.0.1
  */
 @Slf4j
 public class EmbeddedKeycloakApplication  extends KeycloakApplication {

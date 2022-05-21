@@ -10,32 +10,23 @@ import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
 import org.keycloak.provider.ProviderConfigProperty;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * 短信认证器工厂
  *  
  * @author PinWei Wan
- * @since 1.0.0
+ * @since 17.0.1
  */
-@Slf4j
 public class MailAuthenticatorFactory implements AuthenticatorFactory {
     public static final String PROVIDER_ID = "s8d-otp-mail";
     private static final Authenticator SINGLETON = new MailAuthenticator();
 
     @Override
     public Authenticator create(KeycloakSession session) {
-        if (log.isDebugEnabled()) {
-            log.info("Created successfully: {}", SINGLETON.toString());
-        }
         return SINGLETON;
     }
 
     @Override
-    public void init(Scope config) {
-        if (log.isDebugEnabled()) {
-            log.info("Initialization succeeded");  
-        }     
+    public void init(Scope config) {    
     }
 
     @Override

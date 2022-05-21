@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
  * 自动配置
  *  
  * @author PinWei Wan
- * @since 1.0.0
+ * @since 17.0.1
  */
 @Configuration
 @EnableConfigurationProperties({KeycloakProperties.class, KeycloakCustomProperties.class})

@@ -6,30 +6,20 @@ import org.keycloak.email.EmailSenderProviderFactory;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * 邮件发送提供者工厂实现
  *  
  * @author PinWei Wan
- * @since 1.0.0
+ * @since 17.0.1
  */
-@Slf4j
 public class MqttEmailSenderProviderFactory implements EmailSenderProviderFactory {
     @Override
     public EmailSenderProvider create(KeycloakSession session) {
-        final MqttEmailSenderProvider rslt = new MqttEmailSenderProvider(session);
-        if (log.isDebugEnabled()) {
-            log.info("Created successfully: {}", rslt.toString());
-        }
-        return rslt;
+        return new MqttEmailSenderProvider(session);
     }
 
     @Override
-    public void init(Scope config) {
-        if (log.isDebugEnabled()) {
-            log.info("Initialization succeeded");  
-        }     
+    public void init(Scope config) {  
     }
 
     @Override

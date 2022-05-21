@@ -6,24 +6,18 @@ import org.keycloak.Config.Scope;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.KeycloakSessionFactory;
 
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * 默认的服务提供者工厂
  *  
  * @author PinWei Wan
- * @since 1.0.0
+ * @since 17.0.1
  */
-@Slf4j
 public class DefaultPublisherServiceProviderFactory implements PublisherServiceProviderFactory {
     private ConfigProperties properties;
     private static PublisherService SINGLETON = null;
 
     @Override
     public PublisherService create(KeycloakSession session) {
-        if (log.isDebugEnabled()) {
-            log.info("Created successfully: {}", SINGLETON.toString());
-        }
         return SINGLETON;
     }
 
@@ -31,10 +25,6 @@ public class DefaultPublisherServiceProviderFactory implements PublisherServiceP
     public void init(Scope config) {
         properties = ConfigProperties.create(config);
         SINGLETON = new DefaultPublisherService(properties);
-
-        if (log.isDebugEnabled()) {
-            log.info("Initialization succeeded");
-        }
     }
 
     @Override

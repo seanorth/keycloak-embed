@@ -11,7 +11,7 @@ import lombok.experimental.UtilityClass;
  * MQTT主题生成
  *  
  * @author PinWei Wan
- * @since 1.0.0
+ * @since 17.0.1
  */
 @UtilityClass
 public class MqttTopicUtil {

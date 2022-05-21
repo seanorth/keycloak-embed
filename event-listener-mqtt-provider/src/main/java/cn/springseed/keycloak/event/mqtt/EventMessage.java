@@ -15,7 +15,7 @@ import org.keycloak.util.JsonSerialization;
  * 事件消息
  *  
  * @author PinWei Wan
- * @since 1.0.0
+ * @since 17.0.1
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @XmlRootElement

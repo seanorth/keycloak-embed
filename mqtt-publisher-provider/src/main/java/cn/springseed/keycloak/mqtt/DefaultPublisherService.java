@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
  * 默认的服务
  * 
  * @author PinWei Wan
- * @since 1.0.0
+ * @since 17.0.1
  */
 @Slf4j
 public class DefaultPublisherService implements PublisherService {

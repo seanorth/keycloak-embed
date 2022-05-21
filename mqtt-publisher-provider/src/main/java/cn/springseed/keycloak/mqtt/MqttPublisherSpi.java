@@ -8,7 +8,7 @@ import org.keycloak.provider.Spi;
  * spid定义
  *  
  * @author PinWei Wan
- * @since 1.0.0
+ * @since 17.0.1
  */
 public class MqttPublisherSpi implements Spi {
 

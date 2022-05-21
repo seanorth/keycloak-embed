@@ -12,7 +12,7 @@ import org.springframework.test.context.ActiveProfiles;
  * 默认启动test profile
  *  
  * @author PinWei Wan
- * @since 1.0.0
+ * @since 17.0.1
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)

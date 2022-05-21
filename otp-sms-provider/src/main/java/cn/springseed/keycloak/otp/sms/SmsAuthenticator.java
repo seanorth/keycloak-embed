@@ -21,7 +21,7 @@ import cn.springseed.keycloak.mqtt.PublisherService;
  * 短信认证器
  * 
  * @author PinWei Wan
- * @since 1.0.0
+ * @since 17.0.1
  */
 public class SmsAuthenticator implements Authenticator {
 	private static final String SMS_TEMPLATE_CODE = "KEYCLOAK.OTP-SMS";

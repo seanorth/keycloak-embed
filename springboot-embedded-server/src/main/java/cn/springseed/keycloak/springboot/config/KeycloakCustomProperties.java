@@ -10,7 +10,7 @@ import lombok.Data;
  * 属性
  *  
  * @author PinWei Wan
- * @since 1.0.0
+ * @since 17.0.1
  */
 @Data
 @ConfigurationProperties(prefix = "s8d.keycloak.custom")

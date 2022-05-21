@@ -14,7 +14,7 @@ import cn.springseed.keycloak.mqtt.PublisherService;
  * 邮件发送提供者实现
  * 
  * @author PinWei Wan
- * @since 1.0.0
+ * @since 17.0.1
  */
 public class MqttEmailSenderProvider implements EmailSenderProvider {
     private static final String MAIL_TEMPLATE_CODE = "KEYCLOAK.CREDENTIAL_RESET";

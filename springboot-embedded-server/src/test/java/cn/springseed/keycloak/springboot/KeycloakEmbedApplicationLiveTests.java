@@ -17,7 +17,7 @@ import io.restassured.response.Response;
  * 运行测试前，先启动本项目服务。
  * 
  * @author PinWei Wan
- * @since 1.0.0
+ * @since 17.0.1
  */
 public class KeycloakEmbedApplicationLiveTests {
 

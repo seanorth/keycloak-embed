@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfigurati
  * 程序入口
  *  
  * @author PinWei Wan
- * @since 1.0.0
+ * @since 17.0.1
  */
 @SpringBootApplication(exclude = {LiquibaseAutoConfiguration.class, FreeMarkerAutoConfiguration.class})
 public class EmbeddedKeycloakApplication {

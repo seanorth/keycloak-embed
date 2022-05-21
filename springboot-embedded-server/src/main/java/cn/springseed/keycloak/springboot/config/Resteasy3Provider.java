@@ -8,7 +8,7 @@ import org.keycloak.common.util.ResteasyProvider;
  * 继承{@link ResteasyProvider}
  *  
  * @author PinWei Wan
- * @since 1.0.0
+ * @since 17.0.1
  */
 public class Resteasy3Provider implements ResteasyProvider {
 

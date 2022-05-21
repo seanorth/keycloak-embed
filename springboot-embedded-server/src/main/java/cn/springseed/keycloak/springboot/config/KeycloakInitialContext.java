@@ -13,7 +13,7 @@ import javax.naming.NamingException;
  * 继承{@link InitialContext}, 初始化上下文
  *  
  * @author PinWei Wan
- * @since 1.0.0
+ * @since 17.0.1
  */
 public class KeycloakInitialContext extends InitialContext {
 

@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
  * 继承{@link PlatformProvider}
  * 
  * @author PinWei Wan
- * @since 1.0.0
+ * @since 17.0.1
  */
 @Slf4j
 public class SpringBootPlatformProvider implements PlatformProvider {
