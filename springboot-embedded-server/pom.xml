@@ -21,9 +21,16 @@
     <dependencies>
         <dependency>
             <groupId>cn.springseed.keycloak</groupId>
+            <artifactId>keycloak-extensions</artifactId>
+            <version>${project.version}</version>
+        </dependency>  
+
+        <dependency>
+            <groupId>cn.springseed.keycloak</groupId>
             <artifactId>event-listener-mqtt-provider</artifactId>
             <version>${project.version}</version>
-        </dependency>    
+        </dependency>  
+
         <dependency>
             <groupId>cn.springseed.keycloak</groupId>
             <artifactId>mail-sender-mqtt-provider</artifactId>

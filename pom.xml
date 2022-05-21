@@ -24,6 +24,7 @@
         <module>mqtt-publisher-provider</module>
         <module>mail-sender-mqtt-provider</module>
         <module>event-listener-mqtt-provider</module>
+        <module>keycloak-extensions</module>
     </modules>
 
     <dependencyManagement>
@@ -50,7 +51,7 @@
                 <artifactId>keycloak-dependencies-server-all</artifactId>
                 <type>pom</type>
                 <version>${project.version}</version>
-            </dependency>
+            </dependency>         
         </dependencies>
     </dependencyManagement>
 </project>
