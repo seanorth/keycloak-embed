@@ -16,20 +16,27 @@
 
     <properties>
         <resteasy.version>3.15.1.Final</resteasy.version>
+        <docker.image.prefix>keycloak</docker.image.prefix>
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-crypto</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>cn.springseed.keycloak</groupId>
             <artifactId>keycloak-extensions</artifactId>
             <version>${project.version}</version>
-        </dependency>  
+        </dependency>
 
         <dependency>
             <groupId>cn.springseed.keycloak</groupId>
             <artifactId>event-listener-mqtt-provider</artifactId>
             <version>${project.version}</version>
-        </dependency>  
+        </dependency>
 
         <dependency>
             <groupId>cn.springseed.keycloak</groupId>
@@ -41,6 +48,11 @@
             <groupId>cn.springseed.keycloak</groupId>
             <artifactId>mqtt-publisher-provider</artifactId>
             <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.paho</groupId>
+            <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
         </dependency>
 
         <dependency>
@@ -138,38 +150,16 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>build-info</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
                 <configuration>
-                    <excludeDevtools>true</excludeDevtools>
-                    <requiresUnpack>
-                        <dependency>
-                            <groupId>org.keycloak</groupId>
-                            <artifactId>keycloak-connections-jpa</artifactId>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.keycloak</groupId>
-                            <artifactId>keycloak-model-jpa</artifactId>
-                        </dependency>
-                    </requiresUnpack>
+                    <repository>${project.groupId}/${project.artifactId}</repository>
+                    <tag>${project.version}</tag>
                 </configuration>
             </plugin>
-
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <configuration>
-                    <nonFilteredFileExtensions>
-                        <nonFilteredFileExtension>jks</nonFilteredFileExtension>
-                    </nonFilteredFileExtensions>
-                </configuration>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
             <plugin>

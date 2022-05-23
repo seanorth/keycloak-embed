@@ -4,53 +4,13 @@ server:
 spring:
   application:
     name: springseed-keycloak-embedded
-  datasource:
-    url: jdbc:mysql://127.0.0.1:3306/keycloak-embed?characterEncoding=UTF-8&useSSL=true
-    username: root
-    password: root
-  
-
-# 日志配置
-logging:
-  level:
-    ROOT: INFO
-    "[org.springseed]": DEBUG
-    # "[org.springframework.security]": DEBUG
-    # "[org.springframework.cache]": TRACE
-    # "[org.keycloak]": TRACE
 
 s8d.keycloak:
-  # custom:
-  #   adminUser:
-  #     username: admin
-  #     password: admin
-  #     create-admin-user-enabled: true
-
-  #   migration:
-  #     import-enabled: true
-  #     import-location: classpath:springseeds-realm.json
-
-  connectionsJpa:
-    default:
-     showSql: false
-
-  # mqttPublisher:
-  #   provider: "s8d-default"
-  #   serverUri: 1
-  #   username: 2
-  #   password: 3
-  #   clientId: 4
-  #   automaticReconnect: false
-  #   cleanSession: false
-  #   connectionTimeout: 5
-  #   keepAliveInterval: 6
-
   mqttPublisher:
     provider: "s8d-logger"
 
   emailSender:
     provider: "s8d-mqtt"
-    topic: mail/keycloak    
 
 
 

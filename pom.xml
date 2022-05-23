@@ -16,6 +16,10 @@
     <name>SpringSeed : Keycloak</name>
     <description>Keycloak集成及扩展</description>
 
+    <properties>
+        <mqttv3.version>1.2.5</mqttv3.version>
+    </properties>
+
     <modules>
         <module>springboot-embedded-server</module>
         <module>otp-sms-provider</module>
@@ -51,7 +55,12 @@
                 <artifactId>keycloak-dependencies-server-all</artifactId>
                 <type>pom</type>
                 <version>${project.version}</version>
-            </dependency>         
+            </dependency>     
+        <dependency>
+            <groupId>org.eclipse.paho</groupId>
+            <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+            <version>${mqttv3.version}</version>
+        </dependency>                   
         </dependencies>
     </dependencyManagement>
 </project>

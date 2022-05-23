@@ -10,7 +10,8 @@
             "request": "launch",
             "console": "internalConsole",            
             "mainClass": "cn.springseed.keycloak.springboot.EmbeddedKeycloakApplication",
-            "projectName": "springboot-embedded-server"
+            "projectName": "springboot-embedded-server",
+            "vmArgs": "-Dspring.profiles.active=dev"
         }
     ]
 }

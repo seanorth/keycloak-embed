@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:13306/keycloak-embed?characterEncoding=UTF-8&useSSL=true
+    username: kkuser
+    password: kkuser
+
+# 日志配置
+logging:
+  level:
+    ROOT: INFO
+
+s8d.keycloak:
+  custom:
+    adminUser:
+      username: admin
+      password: admin
+      create-admin-user-enabled: true    

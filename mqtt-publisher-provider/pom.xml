@@ -14,10 +14,6 @@
     <name>SpringSeed : Keycloak : MQTT : Publisher</name>
     <description>支持MQTT发布</description>
 
-    <properties>
-        <mqttv3.version>1.2.5</mqttv3.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.keycloak</groupId>
@@ -46,7 +42,7 @@
         <dependency>
             <groupId>org.eclipse.paho</groupId>
             <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
-            <version>${mqttv3.version}</version>
+            <scope>provided</scope>
         </dependency>        
     </dependencies>
 
