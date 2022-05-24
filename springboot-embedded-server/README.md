@@ -2,6 +2,12 @@
 
 基于springboot的，内嵌式的Keycloak服务
 
+#### 打包
+
+``` 
+mvn clean package spring-boot:repackage
+```
+
 #### 本地运行项目
 
 编辑`src/resources/application-dev.yml`文件，修改配置：
@@ -28,15 +34,15 @@ s8d.keycloak:
 ...
 ```      
 
-说明：
-1. 项目第一次启动配置上面信息，成功后就可以注销掉
-2. 在项目启动过程中，会自动创建表结构，初始化超级用户，导入springseeds
-
-可以在IDE中启动项目，使用maven命令启动：
+可以在IDE中启动项目，也可以在命令行使用maven命令启动：
 
 ``` 
 mvn spring-boot:run -Dspring-boot.run.profiles=dev
-``` 
+```
+
+说明：
+1. 项目第一次启动配置上面信息，成功后就可以注销掉
+2. 在项目启动过程中，会自动创建表结构，初始化超级用户，导入springseeds等等
 
 打开游览器，访问地址：http://localhost:9000/auth ，输入超级用户名及密码： admin/admin
 
