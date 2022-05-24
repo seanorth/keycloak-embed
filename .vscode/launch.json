@@ -6,12 +6,21 @@
     "configurations": [
         {
             "type": "java",
-            "name": "EmbeddedKeycloakApplication",
+            "name": "EmbeddedKeycloakApplication-dev",
             "request": "launch",
             "console": "internalConsole",            
             "mainClass": "cn.springseed.keycloak.springboot.EmbeddedKeycloakApplication",
             "projectName": "springboot-embedded-server",
             "vmArgs": "-Dspring.profiles.active=dev"
-        }
+        },
+        {
+            "type": "java",
+            "name": "EmbeddedKeycloakApplication-pro",
+            "request": "launch",
+            "console": "internalConsole",            
+            "mainClass": "cn.springseed.keycloak.springboot.EmbeddedKeycloakApplication",
+            "projectName": "springboot-embedded-server",
+            "vmArgs": "-Dspring.profiles.active=pro"
+        }        
     ]
 }
