@@ -6,6 +6,8 @@ spring:
     name: springseed-keycloak-embedded
 
 s8d.keycloak:
+  custom:
+    server.contextPath: /auth
   mqttPublisher:
     provider: "s8d-logger"
 

@@ -10,8 +10,6 @@ logging:
     ROOT: INFO
 
 s8d.keycloak:
-  custom:
-    server.contextPath: /auth/v1  
     adminUser:
       username: admin
       password: admin
