@@ -2,15 +2,8 @@
 
 基于springboot的，内嵌式的Keycloak服务
 
-#### 打包
-
-``` 
-mvn clean package spring-boot:repackage
-```
-
-#### 本地运行项目
-
-编辑`src/resources/application-dev.yml`文件，修改配置：
+#### 修改配置文件
+修改数据库配置， 编辑`src/resources/application-dev.yml`文件，修改配置：
 
 ```
 spring:
@@ -32,7 +25,16 @@ s8d.keycloak:
       import-enabled: true
       import-location: classpath:springseeds-realm.json
 ...
-```      
+```    
+#### 打包
+
+``` 
+mvn clean install
+```
+
+命令运行成功后，在项目目录`target`下有`cn.springseed.keycloak.springboot-embedded-server-17.0.1.jar`文件。
+
+#### 本地运行项目  
 
 可以在IDE中启动项目，也可以在命令行使用maven命令启动：
 
@@ -40,9 +42,7 @@ s8d.keycloak:
 mvn spring-boot:run -Dspring-boot.run.profiles=dev
 ```
 
-说明：
-1. 项目第一次启动配置上面信息，成功后就可以注销掉
-2. 在项目启动过程中，会自动创建表结构，初始化超级用户，导入springseeds等等
+***说明***：在项目启动过程中，会自动创建表结构，初始化超级用户，导入springseeds等等
 
 打开游览器，访问地址：http://localhost:9000/auth ，输入超级用户名及密码： admin/admin
 
@@ -68,17 +68,36 @@ flush privileges;
 Step-3: 打包，生成镜像文件，运行如下命令：
 
 ```
-mvn clean package spring-boot:repackage
-mvn dockerfile:build
+mvn clean spring-boot:build-image
 ```
 
-成功运行后，在`Docker Desktop`中的images功能中可以查看到`cn.springseed.keycloak/springboot-embedded-server:17.0.1`记录
-
-Step-3: 运行镜像
+Step-4: 运行镜像
 ```
-docker run -p 19000:9000 --name springboot-embedded-server -d cn.springseed.keycloak/springboot-embedded-server:17.0.1
+docker run -p 9000:9000 --link mysql:mysql --name springboot-embedded-server -e "SPRING_PROFILES_ACTIVE=pro" -d docker.io/library/springboot-embedded-server:17.0.1
 ```
 
+成功后，如下操作：
+1. 打开游览器访问：http://localhost:9000/auth 使用admin/admin登录
+2. 选择`Add realm` -> `select file`, 找到`springboot-embedded-server\src\main\resources\springseeds-realm.json`文件，导入即可
+3. 打开游览器，输入地址：http://localhost:9000/auth/realms/springseeds/account/ 可以使用用户`zhangs/123`登录成功
 
+#### 阿里云镜像服务
+
+阿里云提供个人的，免费的镜像服务。开通服务，在本机上运行
+```
+docker login --username=<阿里云账号> registry.cn-hangzhou.aliyuncs.com
+```
+
+然后运行命令
+```
+mvn compile jib:build -Pali-docker 
+```
+
+命令成功运行后，在阿里云镜像服务中可以查询到
+
+本地拉取并运行镜像
+```
+docker run -p 9000:9000 --link mysql:mysql --name springboot-embedded-server -e "SPRING_PROFILES_ACTIVE=pro" -d registry.cn-hangzhou.aliyuncs.com/s8d/cn.springseed.keycloak.springboot-embedded-server
+```
 
 

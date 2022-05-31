@@ -15,12 +15,10 @@
     <description>基于Springboot, 内嵌式的Keycloak服务</description>
 
     <properties>
-        <resteasy.version>3.15.1.Final</resteasy.version>
         <docker.image.prefix>keycloak</docker.image.prefix>
     </properties>
 
     <dependencies>
-
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-crypto</artifactId>
@@ -76,7 +74,6 @@
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jackson2-provider</artifactId>
-            <version>${resteasy.version}</version>
         </dependency>
 
         <dependency>
@@ -150,15 +147,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>dockerfile-maven-plugin</artifactId>
-                <configuration>
-                    <repository>${project.groupId}/${project.artifactId}</repository>
-                    <tag>${project.version}</tag>
-                </configuration>
-            </plugin>
-
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
@@ -167,6 +155,69 @@
                     </excludes>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build-info</goal>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <excludeDevtools>true</excludeDevtools>
+                    <requiresUnpack>
+                        <dependency>
+                            <groupId>org.keycloak</groupId>
+                            <artifactId>keycloak-connections-jpa</artifactId>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.keycloak</groupId>
+                            <artifactId>keycloak-model-jpa</artifactId>
+                        </dependency>
+                    </requiresUnpack>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>ali-docker</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.google.cloud.tools</groupId>
+                        <artifactId>jib-maven-plugin</artifactId>
+                        <configuration>
+                            <from>
+                                <image>openjdk:11</image>
+                            </from>
+                            <to>
+                                <image>registry.cn-hangzhou.aliyuncs.com/s8d/${project.groupId}.${project.artifactId}</image>
+                                <tags>
+                                    <!--版本号-->
+                                    <tag>${project.version}</tag>
+                                </tags>
+                            </to>
+                            <container>
+                                <!--jvm内存参数-->
+                                <jvmFlags>
+                                    <jvmFlag>-Xms256m</jvmFlag>
+                                    <jvmFlag>-Xmx512m</jvmFlag>
+                                </jvmFlags>
+                                <!--要暴露的端口-->
+                                <ports>
+                                    <port>9000</port>
+                                </ports>
+                            </container>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
