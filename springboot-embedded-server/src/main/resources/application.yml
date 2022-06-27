@@ -3,16 +3,16 @@ server:
 
 spring:
   application:
-    name: springseed-keycloak-embedded
+    name: springboot-keycloak-embedded
 
-s8d.keycloak:
+keycloak:
   custom:
     server.contextPath: /auth
   mqttPublisher:
-    provider: "s8d-logger"
+    provider: "logger"
 
   emailSender:
-    provider: "s8d-mqtt"
+    provider: "mqtt"
 
 
 

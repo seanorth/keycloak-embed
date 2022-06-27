@@ -4,13 +4,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>cn.springseed.keycloak</groupId>
+        <groupId>cn.dubhe.keycloak</groupId>
         <artifactId>parent</artifactId>
         <version>17.0.1</version>
     </parent>
 
+
     <artifactId>theme-provider</artifactId>
     <packaging>jar</packaging>
-    <name>SpringSeed : Keycloak : Theme</name>
+    <name>Dubhe : Keycloak : Theme</name>
     <description>主题</description>
 </project>

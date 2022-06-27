@@ -1,6 +1,6 @@
 # Default Keycloak configuration, adapted from Keycloak's keycloak-server.json
 
-s8d.keycloak:
+keycloak:
   hostname:
     provider: "default"
     default:

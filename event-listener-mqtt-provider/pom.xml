@@ -4,19 +4,19 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>cn.springseed.keycloak</groupId>
+        <groupId>cn.dubhe.keycloak</groupId>
         <artifactId>parent</artifactId>
         <version>17.0.1</version>
     </parent>
 
     <artifactId>event-listener-mqtt-provider</artifactId>
     <packaging>jar</packaging>
-    <name>SpringSeed : Keycloak : Event : Listener : MQTT</name>
+    <name>Dubhe : Keycloak : Event : Listener : MQTT</name>
     <description>发送系统事件到MQTT</description>
 
     <dependencies>
         <dependency>
-            <groupId>cn.springseed.keycloak</groupId>
+            <groupId>cn.dubhe.keycloak</groupId>
             <artifactId>mqtt-publisher-provider</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
@@ -46,21 +46,4 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 </project>

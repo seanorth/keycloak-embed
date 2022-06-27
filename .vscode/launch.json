@@ -9,7 +9,7 @@
             "name": "EmbeddedKeycloakApplication-dev",
             "request": "launch",
             "console": "internalConsole",            
-            "mainClass": "cn.springseed.keycloak.springboot.EmbeddedKeycloakApplication",
+            "mainClass": "cn.dubhe.keycloak.springboot.EmbeddedKeycloakApplication",
             "projectName": "springboot-embedded-server",
             "vmArgs": "-Dspring.profiles.active=dev"
         },
@@ -18,7 +18,7 @@
             "name": "EmbeddedKeycloakApplication-pro",
             "request": "launch",
             "console": "internalConsole",            
-            "mainClass": "cn.springseed.keycloak.springboot.EmbeddedKeycloakApplication",
+            "mainClass": "cn.dubhe.keycloak.springboot.EmbeddedKeycloakApplication",
             "projectName": "springboot-embedded-server",
             "vmArgs": "-Dspring.profiles.active=pro"
         }        

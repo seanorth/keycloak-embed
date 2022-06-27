@@ -1,0 +1,2 @@
+cn.dubhe.keycloak.mqtt.DefaultPublisherServiceProviderFactory
+cn.dubhe.keycloak.mqtt.LoggerPublisherServiceProviderFactory

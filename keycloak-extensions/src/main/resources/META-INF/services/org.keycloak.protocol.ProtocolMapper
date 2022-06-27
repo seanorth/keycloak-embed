@@ -1,1 +1,1 @@
-cn.springseed.keycloak.extension.protocolmapper.LuckyNumberTokenMapper
+cn.dubhe.keycloak.extension.protocolmapper.LuckyNumberTokenMapper

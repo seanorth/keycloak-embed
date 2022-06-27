@@ -4,14 +4,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>cn.springseed.keycloak</groupId>
+        <groupId>cn.dubhe.keycloak</groupId>
         <artifactId>parent</artifactId>
         <version>17.0.1</version>
     </parent>
 
     <artifactId>mqtt-publisher-provider</artifactId>
     <packaging>jar</packaging>
-    <name>SpringSeed : Keycloak : MQTT : Publisher</name>
+    <name>Dubhe : Keycloak : MQTT : Publisher</name>
     <description>支持MQTT发布</description>
 
     <dependencies>
@@ -46,20 +46,4 @@
         </dependency>        
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 </project>

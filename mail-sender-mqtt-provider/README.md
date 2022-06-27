@@ -38,7 +38,7 @@ MQTT消费端可以按需要订阅:
 在Keycloak中，手工发送邮件步骤：
 
 1. 启动 `springboot-embedded-server` 项目
-2. 登录，realm选择`springseeds` 
+2. 登录，realm选择`dubhe` 
 3. 进入`Managers -> Users -> View all users` , 选择一个用户
 4. 进入`Credentials -> Credential Reset`, 选择一个`Reset Actions`
 5. 点击`Send mail` 按钮

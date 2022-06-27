@@ -15,13 +15,13 @@ Keycloak服务
 将打包后的provider拷贝到`${KEYCLOAK_HOME}\providers`下，看起来项这样的：
 
 ```
-cn.springseed.keycloak.event-listener-mqtt-provider-17.0.1.jar
-cn.springseed.keycloak.keycloak-extensions-17.0.1.jar
-cn.springseed.keycloak.mail-sender-mqtt-provider-17.0.1.jar
-cn.springseed.keycloak.mqtt-publisher-provider-17.0.1.jar
-cn.springseed.keycloak.otp-mail-provider-17.0.1.jar
-cn.springseed.keycloak.otp-sms-provider-17.0.1.jar
-cn.springseed.keycloak.theme-provider-17.0.1.jar
+cn.dubhe.keycloak.event-listener-mqtt-provider-17.0.1.jar
+cn.dubhe.keycloak.keycloak-extensions-17.0.1.jar
+cn.dubhe.keycloak.mail-sender-mqtt-provider-17.0.1.jar
+cn.dubhe.keycloak.mqtt-publisher-provider-17.0.1.jar
+cn.dubhe.keycloak.otp-mail-provider-17.0.1.jar
+cn.dubhe.keycloak.otp-sms-provider-17.0.1.jar
+cn.dubhe.keycloak.theme-provider-17.0.1.jar
 org.eclipse.paho.client.mqttv3-1.2.5.jar
 spring-security-crypto-5.6.2.jar
 ```
@@ -32,8 +32,8 @@ spring-security-crypto-5.6.2.jar
 
 ```
 ...
-spi-email-sender-provider=s8d-mqtt
-spi-mqtt-publisher-provider=s8d-logger
+spi-email-sender-provider=dubhe-mqtt
+spi-mqtt-publisher-provider=dubhe-logger
 ...
 
 ```

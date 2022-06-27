@@ -1,1 +1,1 @@
-cn.springseed.keycloak.springboot.factory.EmbeddedThemeResourceProviderFactory
+cn.dubhe.keycloak.springboot.factory.EmbeddedThemeResourceProviderFactory

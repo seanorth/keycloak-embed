@@ -14,7 +14,7 @@ spring:
     password: root
 
 ...
-s8d.keycloak:
+keycloak:
   custom:
     adminUser:
       username: admin
@@ -23,7 +23,7 @@ s8d.keycloak:
 
     migration:
       import-enabled: true
-      import-location: classpath:springseeds-realm.json
+      import-location: classpath:dubhe-realm.json
 ...
 ```    
 #### 打包
@@ -32,7 +32,7 @@ s8d.keycloak:
 mvn clean install
 ```
 
-命令运行成功后，在项目目录`target`下有`cn.springseed.keycloak.springboot-embedded-server-17.0.1.jar`文件。
+命令运行成功后，在项目目录`target`下有`cn.dubhe.keycloak.springboot-embedded-server-17.0.1.jar`文件。
 
 #### 本地运行项目  
 
@@ -42,7 +42,7 @@ mvn clean install
 mvn spring-boot:run -Dspring-boot.run.profiles=dev
 ```
 
-***说明***：在项目启动过程中，会自动创建表结构，初始化超级用户，导入springseeds等等
+***说明***：在项目启动过程中，会自动创建表结构，初始化超级用户，导入dubhe realm等等
 
 打开游览器，访问地址：http://localhost:9000/auth ，输入超级用户名及密码： admin/admin
 
@@ -78,8 +78,8 @@ docker run -p 9000:9000 --link mysql:mysql --name springboot-embedded-server -e 
 
 成功后，如下操作：
 1. 打开游览器访问：http://localhost:9000/auth 使用admin/admin登录
-2. 选择`Add realm` -> `select file`, 找到`springboot-embedded-server\src\main\resources\springseeds-realm.json`文件，导入即可
-3. 打开游览器，输入地址：http://localhost:9000/auth/realms/springseeds/account/ 可以使用用户`zhangs/123`登录成功
+2. 选择`Add realm` -> `select file`, 找到`springboot-embedded-server\src\main\resources\dubhe-realm.json`文件，导入即可
+3. 打开游览器，输入地址：http://localhost:9000/auth/realms/dubhe/account/ 可以使用用户`zhangs/123`登录成功
 
 #### 阿里云镜像服务
 
@@ -97,7 +97,7 @@ mvn compile jib:build -Pali-docker
 
 本地拉取并运行镜像
 ```
-docker run -p 9000:9000 --link mysql:mysql --name springboot-embedded-server -e "SPRING_PROFILES_ACTIVE=pro" -d registry.cn-hangzhou.aliyuncs.com/s8d/cn.springseed.keycloak.springboot-embedded-server
+docker run -p 9000:9000 --link mysql:mysql --name springboot-embedded-server -e "SPRING_PROFILES_ACTIVE=pro" -d registry.cn-hangzhou.aliyuncs.com/dubhe/cn.dubhe.keycloak.springboot-embedded-server
 ```
 
 

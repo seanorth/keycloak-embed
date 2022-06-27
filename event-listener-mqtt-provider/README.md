@@ -5,15 +5,15 @@
 
 下面的示例是管理员修改用户信息时的事件
 
-* 主题: `KEYCLAOK/EVENT/ADMIN/SPRINGSEEDS/SUCCESS/USER/UPDATE`  
+* 主题: `KEYCLAOK/EVENT/ADMIN/DUBHE/SUCCESS/USER/UPDATE`  
 * 数据: 
 
 
 ```
 {
-  "@class" : "cn.springseed.keycloak.event.mqtt.AdminEventMessage",
+  "@class" : "cn.dubhe.keycloak.event.mqtt.AdminEventMessage",
   "time" : 1652866433000,
-  "realmId" : "springseeds",
+  "realmId" : "dubhe",
   "authDetails" : {
     "realmId" : "master",
     "clientId" : "debb631d-6ad6-407b-893a-60e1c76509bc",
@@ -41,7 +41,7 @@ MQTT消费者可以有选择的订阅事件
 
 ## Keycloak设置
 1. 启动项目`springboot-embedded-server`
-2. 管理员登录Keycloak界面，在 `Manage > Events > Config > Events Config > Event Listeners` 中添加**s8d-event-listener-mqtt**  
+2. 管理员登录Keycloak界面，在 `Manage > Events > Config > Events Config > Event Listeners` 中添加**dubhe-event-listener-mqtt**  
  
 
 

@@ -1,2 +1,2 @@
-cn.springseed.keycloak.springboot.factory.ScriptAuthenticatorFactory
+cn.dubhe.keycloak.springboot.factory.ScriptAuthenticatorFactory
 

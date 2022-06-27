@@ -9,7 +9,7 @@ logging:
   level:
     ROOT: INFO
 
-s8d.keycloak:
+keycloak:
   custom:
     adminUser:
       username: admin
