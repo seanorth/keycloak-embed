@@ -31,8 +31,8 @@ mvn clean install
 
 
 #### 参考
-
+- [更详细的说明请参考我的博客](https://blog.csdn.net/i_mouse)
 - [Understanding token usage in Keycloak](https://www.janua.fr/understanding-token-usage-in-keycloak/#:~:text=Offline%20tokens%20can%20have%20very%20long%20living%20period,the%20offline%20token%20for%20a%20refresh%20token%20action.)
 - [Customizing Themes for Keycloak](https://www.baeldung.com/spring-keycloak-custom-themes)
 - [Customizing the Login Page for Keycloak](https://www.baeldung.com/keycloak-custom-login-page)
-- - [Custom User Attributes with Keycloak](https://www.baeldung.com/keycloak-custom-user-attributes)
+- [Custom User Attributes with Keycloak](https://www.baeldung.com/keycloak-custom-user-attributes)
