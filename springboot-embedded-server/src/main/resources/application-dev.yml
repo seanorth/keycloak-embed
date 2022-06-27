@@ -27,14 +27,3 @@ keycloak:
   connectionsJpa:
     default:
      showSql: true
-
-  # mqttPublisher:
-  #   provider: "dubhe-default"
-  #   serverUri: 1
-  #   username: 2
-  #   password: 3
-  #   clientId: 4
-  #   automaticReconnect: false
-  #   cleanSession: false
-  #   connectionTimeout: 5
-  #   keepAliveInterval: 6

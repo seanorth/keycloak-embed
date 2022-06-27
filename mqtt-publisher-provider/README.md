@@ -17,7 +17,7 @@ keycloak:
 ...
   # server 插件配置
   mqttPublisher:
-    provider: "dubhe-server"
+    provider: mqtt
     serverUri: tcp://localhost:1883   # 必须的，MQTT服务地址
     username: xxx                     # 可选的，登录用户名
     password: xxxx                    # 可选的，登录密码
@@ -29,7 +29,7 @@ keycloak:
 
   # logger 插件配置
   mqttPublisher:
-    provider: "dubhe-logger"
+    provider: logger
 ...  
 ```
 
