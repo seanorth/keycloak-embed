@@ -17,7 +17,7 @@ import lombok.experimental.UtilityClass;
 public class MqttTopicUtil {
     private static final Pattern SPECIAL_CHARACTERS = Pattern.compile("[^*#a-zA-Z0-9 _/-]");
 	private static final Pattern SPACE = Pattern.compile(" ");
-    private static final String TOPIC_KEY_PREFIX = "KEYCLAOK/EVENT/";
+    private static final String TOPIC_KEY_PREFIX = "KEYCLOAK/EVENT/";
 
 
 	public String getTopic(final AdminEvent event) {

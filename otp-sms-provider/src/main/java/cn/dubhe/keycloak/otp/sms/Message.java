@@ -36,7 +36,7 @@ public class Message {
     /** 区域 */
     private Locale locale;
     /** 参数 */
-    private final Map<String, String> paramters = new HashMap<>();
+    private final Map<String, String> parameters = new HashMap<>();
 
     private Message() {
     }
@@ -51,12 +51,12 @@ public class Message {
     }
 
     public Message code(final String code) {
-        this.paramters.put("code", code);
+        this.parameters.put("code", code);
         return this;
     }
 
     public Message ttl(final int ttl) {
-        this.paramters.put("ttl", String.valueOf(ttl));
+        this.parameters.put("ttl", String.valueOf(ttl));
         return this;
     }
 

@@ -36,7 +36,7 @@ public class Message {
     /** 区域 */
     private Locale locale;
     /** 参数 */
-    private final Map<String, String> paramters = new HashMap<>();
+    private final Map<String, String> parameters = new HashMap<>();
 
     private Message() {
     }
@@ -51,28 +51,28 @@ public class Message {
     }
 
     public Message firstName(final String firstName) throws IOException {
-        this.paramters.put("firstName", firstName);
+        this.parameters.put("firstName", firstName);
         return this;
     }
 
     public Message lastName(final String lastName) throws IOException {
-        this.paramters.put("lastName", lastName);
+        this.parameters.put("lastName", lastName);
         return this;
     }
 
     public Message subject(final String subject) {
-        this.paramters.put("subject", subject);
+        this.parameters.put("subject", subject);
         return this;
     }
 
     public Message textBody(final String textBody) {
-        this.paramters.put("textBody", textBody);
+        this.parameters.put("textBody", textBody);
         return this;
     }
 
 
     public Message htmlBody(final String htmlBody) {
-        this.paramters.put("htmlBody", htmlBody);
+        this.parameters.put("htmlBody", htmlBody);
         return this;
     }
 

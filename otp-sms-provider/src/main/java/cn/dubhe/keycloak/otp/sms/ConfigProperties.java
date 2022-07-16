@@ -1,5 +1,6 @@
 package cn.dubhe.keycloak.otp.sms;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -60,11 +61,12 @@ public class ConfigProperties {
          * @return
          */
         public static List<ProviderConfigProperty> providerConfigProperties() {
-            return List.of(
-                    new ProviderConfigProperty(LENGTH.getCode(), LENGTH.getLabel(), LENGTH.getHelpText(),
-                            ProviderConfigProperty.STRING_TYPE, LENGTH.getDefaultValue()),
-                    new ProviderConfigProperty(TTL.getCode(), TTL.getLabel(), TTL.getHelpText(),
-                            ProviderConfigProperty.STRING_TYPE, TTL.getDefaultValue()));
+            ArrayList<ProviderConfigProperty> list = new ArrayList<>();
+            list.add(new ProviderConfigProperty(LENGTH.getCode(), LENGTH.getLabel(), LENGTH.getHelpText(),
+                    ProviderConfigProperty.STRING_TYPE, LENGTH.getDefaultValue()));
+            list.add(new ProviderConfigProperty(TTL.getCode(), TTL.getLabel(), TTL.getHelpText(),
+                    ProviderConfigProperty.STRING_TYPE, TTL.getDefaultValue()));
+            return list;
         }
     }
 }
